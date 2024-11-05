@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/commands.json",
+  "commands": {
+    "Generate Api Client": {
+      "fileName": "dotnet.exe",
+      "workingDirectory": ".",
+      "arguments": "nswag run nswag.json"
+    }
+  }
+}

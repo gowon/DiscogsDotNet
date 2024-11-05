@@ -1,0 +1,36 @@
+{
+   "variables": [
+      {
+         "name": "branch-name",
+         "command": "git",
+         "args": ["symbolic-ref", "--short", "-q", "HEAD"]
+      }
+   ],
+   "tasks": [
+      {
+         "name": "lint-commit-msg",
+         "command": "dotnet",
+         "group": "commit-msg",
+         "args": ["husky", "exec", ".husky/csx/lint-commit-msg.csx", "--args", "${args}"]
+      },
+      {
+         "name": "append-issue-id",
+         "command": "dotnet",
+         "group": "commit-msg",
+         "args": ["husky", "exec", ".husky/csx/append-issue-id.csx", "--args", "${branch-name}", "${args}"]
+      },
+            {
+         "name": "lint-branch-name",
+         "group": "pre-push",
+         "command": "dotnet",
+         "args": ["husky", "exec", ".husky/csx/lint-branch-name.csx", "--args", "${branch-name}"]
+      },
+      {
+         "name": "verify-dotnet-format",
+         "group": "pre-commit",
+         "command": "dotnet",
+         "args": ["format", "--verify-no-changes", "--verbosity", "detailed", "--include", "${staged}"],
+         "include": ["**/*.cs"]
+       }
+   ]
+}

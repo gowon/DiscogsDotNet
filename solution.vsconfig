@@ -1,0 +1,9 @@
+{
+  "version": "1.0",
+  "components": [],
+  "extensions": [
+    "https://marketplace.visualstudio.com/items?itemName=ErikEJ.EFCorePowerTools",
+    "https://marketplace.visualstudio.com/items?itemName=FortuneNgwenya.FineCodeCoverage2022",
+    "https://marketplace.visualstudio.com/items?itemName=MadsKristensen.CommandTaskRunner64"
+  ]
+}

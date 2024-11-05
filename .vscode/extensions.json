@@ -1,0 +1,16 @@
+{
+    "recommendations": [
+        "ms-dotnettools.vscode-dotnet-pack",
+        "ms-dotnettools.csdevkit",
+        "ms-azuretools.vscode-docker",
+        "hediet.vscode-drawio",
+        "eamodio.gitlens",
+        "visualstudioexptteam.vscodeintellicode",
+        "ms-dotnettools.vscodeintellicode-csharp",
+        "yzhang.markdown-all-in-one",
+        "bierner.markdown-mermaid",
+        "alefragnani.project-manager",
+        "davidanson.vscode-markdownlint",
+        "redhat.vscode-yaml"
+    ]
+}

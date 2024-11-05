@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# $1 = temp file containing commit message
+dotnet husky run --group "commit-msg" --args "$1"

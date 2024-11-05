@@ -1,0 +1,8 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# $1 = localname
+# $2 = localhash
+# $3 = remotename
+# $4 = remotehash
+dotnet husky run --group "pre-push" --args "$1" "$2" "$3" "$4"
