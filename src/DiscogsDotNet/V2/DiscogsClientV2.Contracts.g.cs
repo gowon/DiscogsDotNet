@@ -37,7 +37,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task Request_tokenAsync(string authorization = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> Request_tokenAsync(string authorization = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -50,7 +50,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task Access_tokenAsync(string body = null, string authorization = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> Access_tokenAsync(string body = null, string authorization = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -63,7 +63,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ReleasesGETAsync(string release_id, string content_Type = null, string user_Agent = null, string curr_abbr = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ReleasesGETAsync(string release_id, string content_Type = null, string user_Agent = null, string curr_abbr = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -76,7 +76,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RatingGETAsync(string release_id, string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> RatingGETAsync(string release_id, string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -91,7 +91,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RatingPUTAsync(string release_id, string username, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> RatingPUTAsync(string release_id, string username, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -104,7 +104,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RatingDELETEAsync(string release_id, string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> RatingDELETEAsync(string release_id, string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -117,7 +117,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task RatingGET2Async(string release_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> RatingGET2Async(string release_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -130,7 +130,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task MastersAsync(string master_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> MastersAsync(string master_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -143,7 +143,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task VersionsAsync(string master_id, string content_Type = null, string user_Agent = null, string page = null, string per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> VersionsAsync(string master_id, string content_Type = null, string user_Agent = null, string page = null, string per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -156,7 +156,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ArtistsAsync(string artist_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ArtistsAsync(string artist_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -169,7 +169,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ReleasesGET2Async(string content_Type = null, string user_Agent = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ReleasesGET2Async(string content_Type = null, string user_Agent = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -182,7 +182,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task LabelsAsync(string label_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> LabelsAsync(string label_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -195,7 +195,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ReleasesGET3Async(string label_id, string content_Type = null, string user_Agent = null, string page = null, string per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ReleasesGET3Async(string label_id, string content_Type = null, string user_Agent = null, string page = null, string per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -208,7 +208,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task SearchAsync(string content_Type = null, string user_Agent = null, string query = null, string type = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> SearchAsync(string content_Type = null, string user_Agent = null, string query = null, string type = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -226,7 +226,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task InventoryAsync(string username, string content_Type = null, string user_Agent = null, string @string = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> InventoryAsync(string username, string content_Type = null, string user_Agent = null, string @string = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -240,7 +240,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ListingsGETAsync(string listing_id, string content_Type = null, string user_Agent = null, string curr_abbr = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ListingsGETAsync(string listing_id, string content_Type = null, string user_Agent = null, string curr_abbr = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -285,7 +285,7 @@ namespace DiscogsDotNet.V2
         /// <param name="format_quantity">The number of items this listing counts as, for the purpose of calculating shipping. This field is called “Counts As” on the Discogs website. Set this field to auto to have the quantity automatically estimated for you.</param>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ListingsPOSTAsync(string listing_id, object body = null, string content_Type = null, string user_Agent = null, string release_id = null, string condition = null, string sleeve_condition = null, string price = null, string comments = null, string allow_offers = null, string status = null, string external_id = null, string location = null, string weight = null, string format_quantity = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ListingsPOSTAsync(string listing_id, object body = null, string content_Type = null, string user_Agent = null, string release_id = null, string condition = null, string sleeve_condition = null, string price = null, string comments = null, string allow_offers = null, string status = null, string external_id = null, string location = null, string weight = null, string format_quantity = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -298,7 +298,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ListingsDELETEAsync(string listing_id, string content_Type = null, string user_Agent = null, string curr_abbr = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ListingsDELETEAsync(string listing_id, string content_Type = null, string user_Agent = null, string curr_abbr = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -339,7 +339,7 @@ namespace DiscogsDotNet.V2
         /// <param name="format_quantity">The number of items this listing counts as, for the purpose of calculating shipping. This field is called “Counts As” on the Discogs website. Set this field to auto to have the quantity automatically estimated for you.</param>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ListingsPOST2Async(object body = null, string content_Type = null, string user_Agent = null, string release_id = null, string condition = null, string sleeve_condition = null, string price = null, string comments = null, string allow_offers = null, string status = null, string external_id = null, string location = null, string weight = null, string format_quantity = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ListingsPOST2Async(object body = null, string content_Type = null, string user_Agent = null, string release_id = null, string condition = null, string sleeve_condition = null, string price = null, string comments = null, string allow_offers = null, string status = null, string external_id = null, string location = null, string weight = null, string format_quantity = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -353,7 +353,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task OrdersGETAsync(string order_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> OrdersGETAsync(string order_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -389,7 +389,7 @@ namespace DiscogsDotNet.V2
         /// <param name="shipping">The order shipping amount. As a side-effect of setting this value, the buyer is invoiced and the order status is set to Invoice Sent.</param>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task OrdersPOSTAsync(string order_id, object body = null, string content_Type = null, string user_Agent = null, string status = null, string shipping = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> OrdersPOSTAsync(string order_id, object body = null, string content_Type = null, string user_Agent = null, string status = null, string shipping = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -424,7 +424,7 @@ namespace DiscogsDotNet.V2
         /// <param name="sort_order">Sort items in a particular order (one of asc, desc)</param>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task OrdersGET2Async(string content_Type = null, string user_Agent = null, string status = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> OrdersGET2Async(string content_Type = null, string user_Agent = null, string status = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -438,7 +438,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task MessagesGETAsync(string order_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> MessagesGETAsync(string order_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -455,7 +455,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task MessagesPOSTAsync(string order_id, object body = null, string content_Type = null, string user_Agent = null, string message = null, string status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> MessagesPOSTAsync(string order_id, object body = null, string content_Type = null, string user_Agent = null, string message = null, string status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -469,7 +469,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task FeeAsync(string price, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> FeeAsync(string price, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -482,7 +482,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task Fee2Async(string price, string currency, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> Fee2Async(string price, string currency, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -496,7 +496,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task Price_suggestionsAsync(string release_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> Price_suggestionsAsync(string release_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -509,7 +509,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ExportPOSTAsync(string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ExportPOSTAsync(string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -522,7 +522,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ExportGETAsync(string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ExportGETAsync(string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -535,7 +535,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ExportGET2Async(string id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ExportGET2Async(string id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -548,7 +548,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DownloadAsync(string id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> DownloadAsync(string id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -561,7 +561,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task AddAsync(string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> AddAsync(string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -574,7 +574,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ChangeAsync(string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ChangeAsync(string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -587,7 +587,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UploadAsync(string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> UploadAsync(string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -600,7 +600,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task Upload2Async(string id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> Upload2Async(string id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -615,7 +615,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task IdentityAsync(string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> IdentityAsync(string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -632,7 +632,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UsersGETAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> UsersGETAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -645,7 +645,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UsersPOSTAsync(string username, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> UsersPOSTAsync(string username, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -658,7 +658,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task SubmissionsAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> SubmissionsAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -671,7 +671,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ContributionsAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ContributionsAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -684,7 +684,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task FoldersGETAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> FoldersGETAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -697,7 +697,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task FoldersPOSTAsync(string username, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> FoldersPOSTAsync(string username, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -714,7 +714,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task FoldersGET2Async(string username, string folder_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> FoldersGET2Async(string username, string folder_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -727,7 +727,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task FoldersPOST2Async(string username, string folder_id, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> FoldersPOST2Async(string username, string folder_id, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -740,7 +740,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task FoldersDELETEAsync(string username, string folder_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> FoldersDELETEAsync(string username, string folder_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -755,7 +755,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ReleasesGET4Async(string username, string release_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ReleasesGET4Async(string username, string release_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -784,7 +784,7 @@ namespace DiscogsDotNet.V2
         /// <param name="sort_order">Sort items in a particular order (asc or desc)</param>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ReleasesGET5Async(string username, string folder_id, string content_Type = null, string user_Agent = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ReleasesGET5Async(string username, string folder_id, string content_Type = null, string user_Agent = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -801,7 +801,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ReleasesPOSTAsync(string username, string folder_id, string release_id, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ReleasesPOSTAsync(string username, string folder_id, string release_id, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -818,7 +818,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task InstancesPOSTAsync(string username, string folder_id, string release_id, string instance_id, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> InstancesPOSTAsync(string username, string folder_id, string release_id, string instance_id, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -835,7 +835,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task InstancesDELETEAsync(string username, string folder_id, string release_id, string instance_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> InstancesDELETEAsync(string username, string folder_id, string release_id, string instance_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -848,7 +848,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task FieldsAsync(string username, string folder_id, string release_id, string instance_id, string field_id, string body = null, string content_Type = null, string user_Agent = null, string value = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> FieldsAsync(string username, string folder_id, string release_id, string instance_id, string field_id, string body = null, string content_Type = null, string user_Agent = null, string value = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -863,7 +863,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ValueAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ValueAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -882,7 +882,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task WantsGETAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> WantsGETAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -897,7 +897,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task WantsPOSTAsync(string username, string release_id, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> WantsPOSTAsync(string username, string release_id, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -912,7 +912,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task WantsDELETEAsync(string username, string release_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> WantsDELETEAsync(string username, string release_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -925,7 +925,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ListsAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> ListsAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -938,7 +938,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        System.Threading.Tasks.Task Lists2Async(string list_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<object> Lists2Async(string list_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 

@@ -91,14 +91,12 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /oauth/access_token:
     post:
       tags:
@@ -111,7 +109,7 @@ paths:
         [https://www.discogs.com/developers/#page:authentication,header:authentication-access-token-url](https://www.discogs.com/developers/#page:authentication,header:authentication-access-token-url)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
@@ -138,14 +136,12 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /releases/{release_id}:
     get:
       tags:
@@ -167,7 +163,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: curr_abbr
           in: query
           schema:
@@ -178,12 +174,10 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /releases/{release_id}/rating/{username}:
     get:
       tags:
@@ -204,7 +198,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: release_id
           in: path
           schema:
@@ -216,12 +210,10 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
     put:
       tags:
         - Database
@@ -238,7 +230,7 @@ paths:
         [https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user](https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
@@ -252,7 +244,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: release_id
           in: path
           schema:
@@ -264,12 +256,10 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
     delete:
       tags:
         - Database
@@ -290,7 +280,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: release_id
           in: path
           schema:
@@ -302,12 +292,10 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /releases/{release_id}/rating:
     get:
       tags:
@@ -329,19 +317,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: release_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /masters/{master_id}:
     get:
       tags:
@@ -364,19 +350,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: master_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /masters/{master_id}/versions:
     get:
       tags:
@@ -398,29 +382,27 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: page
           in: query
           schema:
             type: string
-          example: "{page}"
+          example: '{page}'
         - name: per_page
           in: query
           schema:
             type: string
-          example: "{per_page}"
+          example: '{per_page}'
         - name: master_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /artists/{artist_id}:
     get:
       tags:
@@ -441,19 +423,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: artist_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /artists/21262/releases:
     get:
       tags:
@@ -475,24 +455,22 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: sort
           in: query
           schema:
             type: string
-          example: "{sort}"
+          example: '{sort}'
         - name: sort_order
           in: query
           schema:
             type: string
-          example: "{sort_order}"
+          example: '{sort_order}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /labels/{label_id}:
     get:
       tags:
@@ -513,19 +491,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: label_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /labels/{label_id}/releases:
     get:
       tags:
@@ -547,29 +523,27 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: page
           in: query
           schema:
             type: string
-          example: "{page}"
+          example: '{page}'
         - name: per_page
           in: query
           schema:
             type: string
-          example: "{per_page}"
+          example: '{per_page}'
         - name: label_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /database/search:
     get:
       tags:
@@ -591,24 +565,22 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: query
           in: query
           schema:
             type: string
-          example: "{page}"
+          example: '{page}'
         - name: type
           in: query
           schema:
             type: string
-          example: "{type}"
+          example: '{type}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /users/{username}/inventory:
     get:
       tags:
@@ -644,34 +616,32 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: string
           in: query
           schema:
             type: string
-          example: "{status}"
+          example: '{status}'
         - name: sort
           in: query
           schema:
             type: string
-          example: "{sort}"
+          example: '{sort}'
         - name: sort_order
           in: query
           schema:
             type: string
-          example: "{sort_order}"
+          example: '{sort_order}'
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /marketplace/listings/{listing_id}:
     get:
       tags:
@@ -697,24 +667,22 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: curr_abbr
           in: query
           schema:
             type: string
-          example: "{curr_abbr}"
+          example: '{curr_abbr}'
         - name: listing_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
     post:
       tags:
         - Marketplace
@@ -744,14 +712,14 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: release_id
           in: query
           schema:
             type: string
           description: |
             The ID of the listing you are fetching
-          example: "{release_id}"
+          example: '{release_id}'
         - name: condition
           in: query
           schema:
@@ -775,7 +743,7 @@ paths:
             • Fair (F)
 
             • Poor (P)
-          example: "{condition}"
+          example: '{condition}'
         - name: sleeve_condition
           in: query
           schema:
@@ -801,19 +769,19 @@ paths:
             • Poor (P)
 
             • Generic Not Graded No Cover
-          example: "{sleeve_condition}"
+          example: '{sleeve_condition}'
         - name: price
           in: query
           schema:
             type: string
           description: The price of the item (in the seller's currency).
-          example: "{price}"
+          example: '{price}'
         - name: comments
           in: query
           schema:
             type: string
           description: Any remarks about the item that will be displayed to buyers.
-          example: "{comments}"
+          example: '{comments}'
         - name: allow_offers
           in: query
           schema:
@@ -821,7 +789,7 @@ paths:
           description: >-
             Whether or not to allow buyers to make offers on the item. Defaults
             to false.
-          example: "{allow_offers}"
+          example: '{allow_offers}'
         - name: status
           in: query
           schema:
@@ -830,7 +798,7 @@ paths:
             The status of the listing. Defaults to For Sale. Options are For
             Sale (the listing is ready to be shown on the Marketplace) and Draft
             (the listing is not ready for public display).
-          example: "{status}"
+          example: '{status}'
         - name: external_id
           in: query
           schema:
@@ -840,7 +808,7 @@ paths:
             Information stored here will not be displayed to anyone other than
             the seller. This field is called “Private Comments” on the Discogs
             website.
-          example: "{external_id}"
+          example: '{external_id}'
         - name: location
           in: query
           schema:
@@ -851,7 +819,7 @@ paths:
             displayed to anyone other than the seller. This field will be
             visible on the inventory management page and will be available in
             inventory exports via the website.
-          example: "{location}"
+          example: '{location}'
         - name: weight
           in: query
           schema:
@@ -860,7 +828,7 @@ paths:
             The weight, in grams, of this listing, for the purpose of
             calculating shipping. Set this field to auto to have the weight
             automatically estimated for you.
-          example: "{weight}"
+          example: '{weight}'
         - name: format_quantity
           in: query
           schema:
@@ -870,19 +838,17 @@ paths:
             calculating shipping. This field is called “Counts As” on the
             Discogs website. Set this field to auto to have the quantity
             automatically estimated for you.
-          example: "{format_quantity}"
+          example: '{format_quantity}'
         - name: listing_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
     delete:
       tags:
         - Marketplace
@@ -903,24 +869,22 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: curr_abbr
           in: query
           schema:
             type: string
-          example: "{curr_abbr}"
+          example: '{curr_abbr}'
         - name: listing_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /marketplace/listings:
     post:
       tags:
@@ -944,14 +908,14 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: release_id
           in: query
           schema:
             type: string
           description: |
             The ID of the listing you are fetching
-          example: "{release_id}"
+          example: '{release_id}'
         - name: condition
           in: query
           schema:
@@ -975,7 +939,7 @@ paths:
             • Fair (F)
 
             • Poor (P)
-          example: "{condition}"
+          example: '{condition}'
         - name: sleeve_condition
           in: query
           schema:
@@ -1001,19 +965,19 @@ paths:
             • Poor (P)
 
             • Generic Not Graded No Cover
-          example: "{sleeve_condition}"
+          example: '{sleeve_condition}'
         - name: price
           in: query
           schema:
             type: string
           description: The price of the item (in the seller's currency).
-          example: "{price}"
+          example: '{price}'
         - name: comments
           in: query
           schema:
             type: string
           description: Any remarks about the item that will be displayed to buyers.
-          example: "{comments}"
+          example: '{comments}'
         - name: allow_offers
           in: query
           schema:
@@ -1021,7 +985,7 @@ paths:
           description: >-
             Whether or not to allow buyers to make offers on the item. Defaults
             to false.
-          example: "{allow_offers}"
+          example: '{allow_offers}'
         - name: status
           in: query
           schema:
@@ -1030,7 +994,7 @@ paths:
             The status of the listing. Defaults to For Sale. Options are For
             Sale (the listing is ready to be shown on the Marketplace) and Draft
             (the listing is not ready for public display).
-          example: "{status}"
+          example: '{status}'
         - name: external_id
           in: query
           schema:
@@ -1040,7 +1004,7 @@ paths:
             Information stored here will not be displayed to anyone other than
             the seller. This field is called “Private Comments” on the Discogs
             website.
-          example: "{external_id}"
+          example: '{external_id}'
         - name: location
           in: query
           schema:
@@ -1051,7 +1015,7 @@ paths:
             displayed to anyone other than the seller. This field will be
             visible on the inventory management page and will be available in
             inventory exports via the website.
-          example: "{location}"
+          example: '{location}'
         - name: weight
           in: query
           schema:
@@ -1060,7 +1024,7 @@ paths:
             The weight, in grams, of this listing, for the purpose of
             calculating shipping. Set this field to auto to have the weight
             automatically estimated for you.
-          example: "{weight}"
+          example: '{weight}'
         - name: format_quantity
           in: query
           schema:
@@ -1070,14 +1034,12 @@ paths:
             calculating shipping. This field is called “Counts As” on the
             Discogs website. Set this field to auto to have the quantity
             automatically estimated for you.
-          example: "{format_quantity}"
+          example: '{format_quantity}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /marketplace/orders/{order_id}:
     get:
       tags:
@@ -1103,19 +1065,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: order_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
     post:
       tags:
         - Marketplace
@@ -1161,7 +1121,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: status
           in: query
           schema:
@@ -1196,7 +1156,7 @@ paths:
             Furthermore, the new status must be present in the order's
             next_status list. For more information about order statuses, see
             Edit an order.
-          example: "{status}"
+          example: '{status}'
         - name: shipping
           in: query
           schema:
@@ -1204,19 +1164,17 @@ paths:
           description: >-
             The order shipping amount. As a side-effect of setting this value,
             the buyer is invoiced and the order status is set to Invoice Sent.
-          example: "{shipping}"
+          example: '{shipping}'
         - name: order_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /marketplace/orders:
     get:
       tags:
@@ -1238,7 +1196,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: status
           in: query
           schema:
@@ -1260,7 +1218,7 @@ paths:
             • Cancelled (Item Unavailable)
             • Cancelled (Per Buyer's Request) Cancelled (Refund Received)
 
-          example: "{status}"
+          example: '{status}'
         - name: sort
           in: query
           schema:
@@ -1272,20 +1230,18 @@ paths:
             • created
             • status
             • last_activity
-          example: "{sort}"
+          example: '{sort}'
         - name: sort_order
           in: query
           schema:
             type: string
           description: Sort items in a particular order (one of asc, desc)
-          example: "{sort_order}"
+          example: '{sort_order}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /marketplace/orders/{order_id}/messages:
     get:
       tags:
@@ -1309,19 +1265,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: order_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
     post:
       tags:
         - Marketplace
@@ -1351,29 +1305,27 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: message
           in: query
           schema:
             type: string
-          example: "{message}"
+          example: '{message}'
         - name: status
           in: query
           schema:
             type: string
-          example: "{status}"
+          example: '{status}'
         - name: order_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /marketplace/fee/{price}:
     get:
       tags:
@@ -1397,19 +1349,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: price
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /marketplace/fee/{price}/{currency}:
     get:
       tags:
@@ -1431,7 +1381,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: price
           in: path
           schema:
@@ -1443,12 +1393,10 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /marketplace/price_suggestions/{release_id}:
     get:
       tags:
@@ -1474,19 +1422,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: release_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /inventory/export:
     post:
       tags:
@@ -1499,7 +1445,7 @@ paths:
         [https://www.discogs.com/developers/#page:inventory-export,header:inventory-export-export-your-inventory](https://www.discogs.com/developers/#page:inventory-export,header:inventory-export-export-your-inventory)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
@@ -1513,14 +1459,12 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
     get:
       tags:
         - Inventory Export
@@ -1541,14 +1485,12 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /inventory/export/{id}:
     get:
       tags:
@@ -1569,19 +1511,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /inventory/export/{id}/download:
     get:
       tags:
@@ -1602,19 +1542,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /inventory/upload/add:
     post:
       tags:
@@ -1627,7 +1565,7 @@ paths:
         [https://www.discogs.com/developers/#page:inventory-upload,header:inventory-upload-add-inventory](https://www.discogs.com/developers/#page:inventory-upload,header:inventory-upload-add-inventory)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
@@ -1641,14 +1579,12 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /inventory/upload/change:
     post:
       tags:
@@ -1661,7 +1597,7 @@ paths:
         [https://www.discogs.com/developers/#page:inventory-upload,header:inventory-upload-delete-inventory](https://www.discogs.com/developers/#page:inventory-upload,header:inventory-upload-delete-inventory)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
@@ -1675,14 +1611,12 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /inventory/upload:
     get:
       tags:
@@ -1704,14 +1638,12 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /inventory/upload/{id}:
     get:
       tags:
@@ -1732,19 +1664,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /oauth/identity:
     get:
       tags:
@@ -1772,14 +1702,12 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /users/{username}:
     get:
       tags:
@@ -1808,19 +1736,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
     post:
       tags:
         - User identity
@@ -1833,7 +1759,7 @@ paths:
         [https://www.discogs.com/developers/#page:user-identity,header:user-identity-profile](https://www.discogs.com/developers/#page:user-identity,header:user-identity-profile)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
@@ -1847,19 +1773,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /users/{username}/submissions:
     get:
       tags:
@@ -1881,19 +1805,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /users/{username}/contributions:
     get:
       tags:
@@ -1916,19 +1838,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /users/{username}/collection/folders:
     get:
       tags:
@@ -1953,19 +1873,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
     post:
       tags:
         - User Collection
@@ -1981,7 +1899,7 @@ paths:
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection](https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
@@ -1995,19 +1913,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /users/{username}/collection/folders/{folder_id}:
     get:
       tags:
@@ -2037,7 +1953,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
@@ -2049,12 +1965,10 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
     post:
       tags:
         - User Collection
@@ -2067,7 +1981,7 @@ paths:
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder](https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
@@ -2081,7 +1995,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
@@ -2093,12 +2007,10 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
     delete:
       tags:
         - User Collection
@@ -2119,7 +2031,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
@@ -2131,12 +2043,10 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /users/{username}/collection/releases/{release_id}:
     get:
       tags:
@@ -2163,7 +2073,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
@@ -2175,12 +2085,10 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /users/{username}/collection/folders/{folder_id}/releases:
     get:
       tags:
@@ -2215,19 +2123,19 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: sort
           in: query
           schema:
             type: string
           description: "Sort items by one of these fields: \n• label\n• artist\n• title\n• catno\n• format\n•\_rating\n• added\n• year"
-          example: "{sort}"
+          example: '{sort}'
         - name: sort_order
           in: query
           schema:
             type: string
           description: Sort items in a particular order (asc or desc)
-          example: "{sort_order}"
+          example: '{sort_order}'
         - name: username
           in: path
           schema:
@@ -2239,12 +2147,10 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /users/{username}/collection/folders/{folder_id}/releases/{release_id}:
     post:
       tags:
@@ -2263,7 +2169,7 @@ paths:
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-add-to-collection-folder](https://www.discogs.com/developers/#page:user-collection,header:user-collection-add-to-collection-folder)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
@@ -2277,7 +2183,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
@@ -2294,14 +2200,12 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
-  ? /users/{username}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}
-  : post:
+            application/json: {}
+  /users/{username}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}:
+    post:
       tags:
         - User Collection
       summary: Change rating of release
@@ -2322,7 +2226,7 @@ paths:
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-change-rating-of-release](https://www.discogs.com/developers/#page:user-collection,header:user-collection-change-rating-of-release)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
@@ -2336,7 +2240,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
@@ -2358,12 +2262,10 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
     delete:
       tags:
         - User Collection
@@ -2390,7 +2292,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
@@ -2412,14 +2314,12 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
-  ? /users/{username}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}/fields/{field_id}{
-  : post:
+            application/json: {}
+  /users/{username}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}/fields/{field_id}{:
+    post:
       tags:
         - User Collection
       summary: Edit fields instance
@@ -2430,7 +2330,7 @@ paths:
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-edit-fields-instance](https://www.discogs.com/developers/#page:user-collection,header:user-collection-edit-fields-instance)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
@@ -2444,7 +2344,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: value
           in: query
           schema:
@@ -2475,12 +2375,10 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /users/{username}/collection/value:
     get:
       tags:
@@ -2504,19 +2402,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /users/{username}/wants:
     get:
       tags:
@@ -2551,19 +2447,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /users/{username}/wants/{release_id}:
     post:
       tags:
@@ -2580,7 +2474,7 @@ paths:
         [https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-add-to-wantlist](https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-add-to-wantlist)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
@@ -2594,7 +2488,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
@@ -2606,12 +2500,10 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
     delete:
       tags:
         - User Wantlist
@@ -2634,7 +2526,7 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
@@ -2646,12 +2538,10 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /users/{username}/lists:
     get:
       tags:
@@ -2673,19 +2563,17 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
   /lists/{list_id}:
     get:
       tags:
@@ -2707,16 +2595,14 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
         - name: list_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
-            application/json:
-              schema:
-                type: object
+            application/json: {}
