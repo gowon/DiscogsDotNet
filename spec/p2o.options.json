@@ -1,0 +1,8 @@
+{
+    "info": {
+        "title": "Discogs API",
+        "version": "2.0"
+    },
+    "operationId": "auto",
+    "replaceVars": true
+}
