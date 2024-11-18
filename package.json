@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "mock-to-openapi": "^1.1.2",
     "postman-to-openapi": "^1.7.3"
   }
 }
