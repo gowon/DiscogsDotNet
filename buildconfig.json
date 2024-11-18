@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/appsettings.json",
+  "BuildTargets": {
+    "Nuget": {
+      "Source": "http://localhost:7080/v3/index.json",
+      "ApiKey": "E44D3CC225C74F978D74B15861A64F63"
+    }
+  },
+  "Docker": {
+    "ProjectName": "fod-dal-proto"
+  }
+}

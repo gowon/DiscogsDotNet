@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Help Output": {
+      "commandName": "Project",
+      "commandLineArgs": "-?",
+      "workingDirectory": "$(MSBuildProjectDirectory)/.."
+    }
+  }
+}

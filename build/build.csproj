@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="build.sln.DotSettings" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\buildconfig.json" Link="buildconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bullseye" Version="5.0.0" />
+    <PackageReference Include="Docker.DotNet" Version="3.125.15" />
+    <PackageReference Include="Extensions.Options.AutoBinder" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+    <PackageReference Include="SimpleExec" Version="12.0.0" />
+    <PackageReference Include="Spectre.Console" Version="0.49.1" />
+    <PackageReference Include="Spectre.Console.Cli" Version="0.49.1" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+    <PackageReference Include="System.CommandLine.Hosting" Version="0.4.0-alpha.22272.1" />
+    <PackageReference Include="TestableIO.System.IO.Abstractions.Wrappers" Version="21.0.29" />
+    <PackageReference Include="YamlDotNet" Version="16.1.3" />
+  </ItemGroup>
+
+</Project>
