@@ -16,7 +16,16 @@ public class Worker : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var response = await _client.ReleasesGETAsync("249504", curr_abbr: "USD", cancellationToken: stoppingToken) as JToken; // returns JToken
-        _logger.LogInformation($"response: {response!.ToString()}");
+        var username = "gowon";
+                
+        var response = await _client.CollectionValueAsync(username, stoppingToken) as JToken;
+                _logger.LogInformation($"response: {response!.ToString()}");
+
+        var items = await _client.GetCollectionItemsByFolderAsync(username, "0", "added", "asc", stoppingToken) as JToken;
+
+        foreach (var item in items["releases"]) {
+            _logger.LogInformation($"response: {item!.ToString()}");
+        }
+
     }
 }

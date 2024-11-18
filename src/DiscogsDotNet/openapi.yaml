@@ -1,19 +1,11 @@
 openapi: 3.1.0
 info:
-  title: Discogs
-  version: 2.0.0
+  title: Discogs API
+  version: '2.0'
 servers:
   - url: http://{{url}}
-components:
-  securitySchemes:
-    noauthAuth:
-      type: http
-      scheme: noauth
-    oauth1Auth:
-      type: http
-      scheme: oauth1
 security:
-  - oauth1Auth: []
+  - DiscogsAuth: []
 tags:
   - name: Authentication
     description: >-
@@ -65,14 +57,15 @@ paths:
     get:
       tags:
         - Authentication
-      summary: Request Token
+      summary: Get Request Token
+      operationId: getRequestToken
       description: >-
         Generate the request token.
 
 
         [https://www.discogs.com/developers/#page:authentication,header:authentication-request-token-url](https://www.discogs.com/developers/#page:authentication,header:authentication-request-token-url)
       security:
-        - noauthAuth: []
+        - DiscogsAuth: []
       parameters:
         - name: Authorization
           in: header
@@ -91,9 +84,9 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -103,7 +96,8 @@ paths:
     post:
       tags:
         - Authentication
-      summary: Access Token
+      summary: Get Access Token
+      operationId: getAccessToken
       description: >-
         Generate the access token.
 
@@ -111,12 +105,12 @@ paths:
         [https://www.discogs.com/developers/#page:authentication,header:authentication-access-token-url](https://www.discogs.com/developers/#page:authentication,header:authentication-access-token-url)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
       security:
-        - noauthAuth: []
+        - DiscogsAuth: []
       parameters:
         - name: Authorization
           in: header
@@ -138,9 +132,9 @@ paths:
           in: header
           schema:
             type: string
-          example: "{{user_agent}}"
+          example: '{{user_agent}}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -150,7 +144,8 @@ paths:
     get:
       tags:
         - Database
-      summary: Releases
+      summary: Get Releases
+      operationId: getReleases
       description: >-
         The Release resource represents a particular physical or digital object
         released by one or more Artists.
@@ -158,53 +153,35 @@ paths:
 
         [https://www.discogs.com/developers/#page:database,header:database-release](https://www.discogs.com/developers/#page:database,header:database-release)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: curr_abbr
           in: query
           schema:
             type: string
+          example: '{curr_abbr}'
         - name: release_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/Release"
   /releases/{release_id}/rating/{username}:
     get:
       tags:
         - Database
-      summary: Release rating by user
+      summary: Get Release rating by user
+      operationId: getReleaseRatingByUser
       description: >-
         Retrieves the release's rating for a given user.
 
 
         [https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user](https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: release_id
           in: path
           schema:
@@ -216,7 +193,7 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -225,7 +202,8 @@ paths:
     put:
       tags:
         - Database
-      summary: Release rating by user
+      summary: Update Release rating by user
+      operationId: updateReleaseRatingByUser
       description: >-
         Updates the release's rating for a given user. Authentication as the
         user is required. 
@@ -238,21 +216,11 @@ paths:
         [https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user](https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: release_id
           in: path
           schema:
@@ -264,7 +232,7 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -273,7 +241,8 @@ paths:
     delete:
       tags:
         - Database
-      summary: Release rating by user
+      summary: Delete Release rating by user
+      operationId: deleteReleaseRatingByUser
       description: >-
         Deletes the release's rating for a given user. Authentication as the
         user is required.
@@ -281,16 +250,6 @@ paths:
 
         [https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user](https://www.discogs.com/developers/#page:database,header:database-release-rating-by-user)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: release_id
           in: path
           schema:
@@ -302,7 +261,7 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -312,7 +271,8 @@ paths:
     get:
       tags:
         - Database
-      summary: Community release rating
+      summary: Get Community release rating
+      operationId: getCommunityReleaseRating
       description: >-
         The Community Release Rating endpoint retrieves the average rating and
         the total number of user ratings for a given release.
@@ -320,23 +280,13 @@ paths:
 
         [https://www.discogs.com/developers/#page:database,header:database-community-release-rating](https://www.discogs.com/developers/#page:database,header:database-community-release-rating)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: release_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -346,7 +296,8 @@ paths:
     get:
       tags:
         - Database
-      summary: Master release
+      summary: Get Master release
+      operationId: getMasterRelease
       description: >-
         The Master resource represents a set of similar Releases. Masters (also
         known as “master releases”) have a “main release” which is often the
@@ -355,23 +306,13 @@ paths:
 
         [https://www.discogs.com/developers/#page:database,header:database-master-release](https://www.discogs.com/developers/#page:database,header:database-master-release)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: master_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -381,7 +322,8 @@ paths:
     get:
       tags:
         - Database
-      summary: Master release versions
+      summary: Get Master release versions
+      operationId: getMasterReleaseVersions
       description: >-
         Retrieves a list of all Releases that are versions of this master.
         Accepts Pagination parameters.
@@ -389,33 +331,23 @@ paths:
 
         [https://www.discogs.com/developers/#page:database,header:database-master-release-versions](https://www.discogs.com/developers/#page:database,header:database-master-release-versions)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: page
           in: query
           schema:
             type: string
-          example: "{page}"
+          example: '{page}'
         - name: per_page
           in: query
           schema:
             type: string
-          example: "{per_page}"
+          example: '{per_page}'
         - name: master_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -425,40 +357,32 @@ paths:
     get:
       tags:
         - Database
-      summary: Artist
+      summary: Get Artist
+      operationId: getArtist
       description: >-
         Get an artist
 
 
         [https://www.discogs.com/developers/#page:database,header:database-artist](https://www.discogs.com/developers/#page:database,header:database-artist)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: artist_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
               schema:
                 type: object
-  /artists/21262/releases:
+  /artists/{artist_id}/releases:
     get:
       tags:
         - Database
-      summary: Artist releases
+      summary: Get Artist releases
+      operationId: getArtistReleases
       description: >-
         Returns a list of Releases and Masters associated with the Artist.
         Accepts Pagination.
@@ -466,28 +390,23 @@ paths:
 
         [https://www.discogs.com/developers/#page:database,header:database-artist-releases](https://www.discogs.com/developers/#page:database,header:database-artist-releases)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: sort
           in: query
           schema:
             type: string
-          example: "{sort}"
+          example: '{sort}'
         - name: sort_order
           in: query
           schema:
             type: string
-          example: "{sort_order}"
+          example: '{sort_order}'
+        - name: artist_id
+          in: path
+          schema:
+            type: string
+          required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -497,30 +416,21 @@ paths:
     get:
       tags:
         - Database
-      summary: Label
+      summary: Get Label
+      operationId: getLabel
       description: >-
         Get a label
 
 
         [https://www.discogs.com/developers/#page:database,header:database-label](https://www.discogs.com/developers/#page:database,header:database-label)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: label_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -530,7 +440,8 @@ paths:
     get:
       tags:
         - Database
-      summary: All label releases
+      summary: Get All label releases
+      operationId: getAllLabelReleases
       description: >-
         Returns a list of Releases associated with the label. Accepts Pagination
         parameters.
@@ -538,33 +449,23 @@ paths:
 
         [https://www.discogs.com/developers/#page:database,header:database-all-label-releases](https://www.discogs.com/developers/#page:database,header:database-all-label-releases)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: page
           in: query
           schema:
             type: string
-          example: "{page}"
+          example: '{page}'
         - name: per_page
           in: query
           schema:
             type: string
-          example: "{per_page}"
+          example: '{per_page}'
         - name: label_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -574,7 +475,8 @@ paths:
     get:
       tags:
         - Database
-      summary: Search
+      summary: Get Search
+      operationId: getSearch
       description: >-
         Issue a search query to our database. This endpoint accepts pagination
         parameters. Authentication (as any user) is required.
@@ -582,28 +484,18 @@ paths:
 
         [https://www.discogs.com/developers/#page:database,header:database-search](https://www.discogs.com/developers/#page:database,header:database-search)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: query
           in: query
           schema:
             type: string
-          example: "{page}"
+          example: '{page}'
         - name: type
           in: query
           schema:
             type: string
-          example: "{type}"
+          example: '{type}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -613,7 +505,8 @@ paths:
     get:
       tags:
         - Marketplace
-      summary: Inventory
+      summary: Get Inventory
+      operationId: getInventory
       description: >-
         Returns the list of listings in a user's inventory. Accepts Pagination
         parameters.
@@ -635,38 +528,28 @@ paths:
 
         [https://www.discogs.com/developers/#page:marketplace,header:marketplace-inventory](https://www.discogs.com/developers/#page:marketplace,header:marketplace-inventory)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: string
           in: query
           schema:
             type: string
-          example: "{status}"
+          example: '{status}'
         - name: sort
           in: query
           schema:
             type: string
-          example: "{sort}"
+          example: '{sort}'
         - name: sort_order
           in: query
           schema:
             type: string
-          example: "{sort_order}"
+          example: '{sort_order}'
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -676,7 +559,8 @@ paths:
     get:
       tags:
         - Marketplace
-      summary: Listing
+      summary: Get Listing
+      operationId: getListing
       description: >-
         View the data associated with a listing.
 
@@ -688,28 +572,18 @@ paths:
 
         [https://www.discogs.com/developers/#page:marketplace,header:marketplace-listing](https://www.discogs.com/developers/#page:marketplace,header:marketplace-listing)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: curr_abbr
           in: query
           schema:
             type: string
-          example: "{curr_abbr}"
+          example: '{curr_abbr}'
         - name: listing_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -718,7 +592,8 @@ paths:
     post:
       tags:
         - Marketplace
-      summary: Listing
+      summary: Create Listing
+      operationId: createListing
       description: >-
         Edit the data associated with a listing.
 
@@ -735,23 +610,13 @@ paths:
       requestBody:
         content: {}
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: release_id
           in: query
           schema:
             type: string
           description: |
             The ID of the listing you are fetching
-          example: "{release_id}"
+          example: '{release_id}'
         - name: condition
           in: query
           schema:
@@ -775,7 +640,7 @@ paths:
             • Fair (F)
 
             • Poor (P)
-          example: "{condition}"
+          example: '{condition}'
         - name: sleeve_condition
           in: query
           schema:
@@ -801,19 +666,19 @@ paths:
             • Poor (P)
 
             • Generic Not Graded No Cover
-          example: "{sleeve_condition}"
+          example: '{sleeve_condition}'
         - name: price
           in: query
           schema:
             type: string
           description: The price of the item (in the seller's currency).
-          example: "{price}"
+          example: '{price}'
         - name: comments
           in: query
           schema:
             type: string
           description: Any remarks about the item that will be displayed to buyers.
-          example: "{comments}"
+          example: '{comments}'
         - name: allow_offers
           in: query
           schema:
@@ -821,7 +686,7 @@ paths:
           description: >-
             Whether or not to allow buyers to make offers on the item. Defaults
             to false.
-          example: "{allow_offers}"
+          example: '{allow_offers}'
         - name: status
           in: query
           schema:
@@ -830,7 +695,7 @@ paths:
             The status of the listing. Defaults to For Sale. Options are For
             Sale (the listing is ready to be shown on the Marketplace) and Draft
             (the listing is not ready for public display).
-          example: "{status}"
+          example: '{status}'
         - name: external_id
           in: query
           schema:
@@ -840,7 +705,7 @@ paths:
             Information stored here will not be displayed to anyone other than
             the seller. This field is called “Private Comments” on the Discogs
             website.
-          example: "{external_id}"
+          example: '{external_id}'
         - name: location
           in: query
           schema:
@@ -851,7 +716,7 @@ paths:
             displayed to anyone other than the seller. This field will be
             visible on the inventory management page and will be available in
             inventory exports via the website.
-          example: "{location}"
+          example: '{location}'
         - name: weight
           in: query
           schema:
@@ -860,7 +725,7 @@ paths:
             The weight, in grams, of this listing, for the purpose of
             calculating shipping. Set this field to auto to have the weight
             automatically estimated for you.
-          example: "{weight}"
+          example: '{weight}'
         - name: format_quantity
           in: query
           schema:
@@ -870,14 +735,14 @@ paths:
             calculating shipping. This field is called “Counts As” on the
             Discogs website. Set this field to auto to have the quantity
             automatically estimated for you.
-          example: "{format_quantity}"
+          example: '{format_quantity}'
         - name: listing_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -886,7 +751,8 @@ paths:
     delete:
       tags:
         - Marketplace
-      summary: Listing
+      summary: Delete Listing
+      operationId: deleteListing
       description: >-
         Permanently remove a listing from the Marketplace. Authentication as the
         listing owner is required.
@@ -894,28 +760,18 @@ paths:
 
         [https://www.discogs.com/developers/#page:marketplace,header:marketplace-listing](https://www.discogs.com/developers/#page:marketplace,header:marketplace-listing)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: curr_abbr
           in: query
           schema:
             type: string
-          example: "{curr_abbr}"
+          example: '{curr_abbr}'
         - name: listing_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -925,7 +781,8 @@ paths:
     post:
       tags:
         - Marketplace
-      summary: New listing
+      summary: Create New listing
+      operationId: createNewListing
       description: >-
         Create a Marketplace listing. Authentication is required; the listing
         will be added to the authenticated user's Inventory.
@@ -935,23 +792,13 @@ paths:
       requestBody:
         content: {}
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: release_id
           in: query
           schema:
             type: string
           description: |
             The ID of the listing you are fetching
-          example: "{release_id}"
+          example: '{release_id}'
         - name: condition
           in: query
           schema:
@@ -975,7 +822,7 @@ paths:
             • Fair (F)
 
             • Poor (P)
-          example: "{condition}"
+          example: '{condition}'
         - name: sleeve_condition
           in: query
           schema:
@@ -1001,19 +848,19 @@ paths:
             • Poor (P)
 
             • Generic Not Graded No Cover
-          example: "{sleeve_condition}"
+          example: '{sleeve_condition}'
         - name: price
           in: query
           schema:
             type: string
           description: The price of the item (in the seller's currency).
-          example: "{price}"
+          example: '{price}'
         - name: comments
           in: query
           schema:
             type: string
           description: Any remarks about the item that will be displayed to buyers.
-          example: "{comments}"
+          example: '{comments}'
         - name: allow_offers
           in: query
           schema:
@@ -1021,7 +868,7 @@ paths:
           description: >-
             Whether or not to allow buyers to make offers on the item. Defaults
             to false.
-          example: "{allow_offers}"
+          example: '{allow_offers}'
         - name: status
           in: query
           schema:
@@ -1030,7 +877,7 @@ paths:
             The status of the listing. Defaults to For Sale. Options are For
             Sale (the listing is ready to be shown on the Marketplace) and Draft
             (the listing is not ready for public display).
-          example: "{status}"
+          example: '{status}'
         - name: external_id
           in: query
           schema:
@@ -1040,7 +887,7 @@ paths:
             Information stored here will not be displayed to anyone other than
             the seller. This field is called “Private Comments” on the Discogs
             website.
-          example: "{external_id}"
+          example: '{external_id}'
         - name: location
           in: query
           schema:
@@ -1051,7 +898,7 @@ paths:
             displayed to anyone other than the seller. This field will be
             visible on the inventory management page and will be available in
             inventory exports via the website.
-          example: "{location}"
+          example: '{location}'
         - name: weight
           in: query
           schema:
@@ -1060,7 +907,7 @@ paths:
             The weight, in grams, of this listing, for the purpose of
             calculating shipping. Set this field to auto to have the weight
             automatically estimated for you.
-          example: "{weight}"
+          example: '{weight}'
         - name: format_quantity
           in: query
           schema:
@@ -1070,9 +917,9 @@ paths:
             calculating shipping. This field is called “Counts As” on the
             Discogs website. Set this field to auto to have the quantity
             automatically estimated for you.
-          example: "{format_quantity}"
+          example: '{format_quantity}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1082,7 +929,8 @@ paths:
     get:
       tags:
         - Marketplace
-      summary: Order
+      summary: Get Order
+      operationId: getOrder
       description: >-
         View the data associated with a listing.
 
@@ -1094,23 +942,13 @@ paths:
 
         [https://www.discogs.com/developers/#page:marketplace,header:marketplace-listing](https://www.discogs.com/developers/#page:marketplace,header:marketplace-listing)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: order_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1119,7 +957,8 @@ paths:
     post:
       tags:
         - Marketplace
-      summary: Order
+      summary: Create Order
+      operationId: createOrder
       description: >-
         dit the data associated with an order.
 
@@ -1152,16 +991,6 @@ paths:
       requestBody:
         content: {}
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: status
           in: query
           schema:
@@ -1196,7 +1025,7 @@ paths:
             Furthermore, the new status must be present in the order's
             next_status list. For more information about order statuses, see
             Edit an order.
-          example: "{status}"
+          example: '{status}'
         - name: shipping
           in: query
           schema:
@@ -1204,14 +1033,14 @@ paths:
           description: >-
             The order shipping amount. As a side-effect of setting this value,
             the buyer is invoiced and the order status is set to Invoice Sent.
-          example: "{shipping}"
+          example: '{shipping}'
         - name: order_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1221,7 +1050,8 @@ paths:
     get:
       tags:
         - Marketplace
-      summary: List orders
+      summary: Get List orders
+      operationId: getListOrders
       description: >-
         Returns a list of the authenticated user's orders. Accepts Pagination
         parameters.
@@ -1229,16 +1059,6 @@ paths:
 
         [https://www.discogs.com/developers/#page:marketplace,header:marketplace-list-orders](https://www.discogs.com/developers/#page:marketplace,header:marketplace-list-orders)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: status
           in: query
           schema:
@@ -1260,7 +1080,7 @@ paths:
             • Cancelled (Item Unavailable)
             • Cancelled (Per Buyer's Request) Cancelled (Refund Received)
 
-          example: "{status}"
+          example: '{status}'
         - name: sort
           in: query
           schema:
@@ -1272,15 +1092,15 @@ paths:
             • created
             • status
             • last_activity
-          example: "{sort}"
+          example: '{sort}'
         - name: sort_order
           in: query
           schema:
             type: string
           description: Sort items in a particular order (one of asc, desc)
-          example: "{sort_order}"
+          example: '{sort_order}'
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1290,7 +1110,8 @@ paths:
     get:
       tags:
         - Marketplace
-      summary: List order messages
+      summary: Get List order messages
+      operationId: getListOrderMessages
       description: >-
         Returns a list of the order's messages with the most recent first.
         Accepts Pagination parameters.
@@ -1300,23 +1121,13 @@ paths:
 
         [https://www.discogs.com/developers/#page:marketplace,header:marketplace-list-order-messages](https://www.discogs.com/developers/#page:marketplace,header:marketplace-list-order-messages)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: order_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1325,7 +1136,8 @@ paths:
     post:
       tags:
         - Marketplace
-      summary: List order messages
+      summary: Create List order messages
+      operationId: createListOrderMessages
       description: >-
         Adds a new message to the order's message log.
 
@@ -1342,33 +1154,23 @@ paths:
       requestBody:
         content: {}
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: message
           in: query
           schema:
             type: string
-          example: "{message}"
+          example: '{message}'
         - name: status
           in: query
           schema:
             type: string
-          example: "{status}"
+          example: '{status}'
         - name: order_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1378,7 +1180,8 @@ paths:
     get:
       tags:
         - Marketplace
-      summary: Fee
+      summary: Get Fee
+      operationId: getFee
       description: >-
         The Fee resource allows you to quickly calculate the fee for selling an
         item on the Marketplace.
@@ -1388,23 +1191,13 @@ paths:
 
         )
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: price
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1414,7 +1207,8 @@ paths:
     get:
       tags:
         - Marketplace
-      summary: Fee with currency
+      summary: Get Fee with currency
+      operationId: getFeeWithCurrency
       description: >-
         The Fee resource allows you to quickly calculate the fee for selling an
         item on the Marketplace given a particular currency.
@@ -1422,16 +1216,6 @@ paths:
 
         [https://www.discogs.com/developers/#page:marketplace,header:marketplace-fee-with-currency](https://www.discogs.com/developers/#page:marketplace,header:marketplace-fee-with-currency)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: price
           in: path
           schema:
@@ -1443,7 +1227,7 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1453,7 +1237,8 @@ paths:
     get:
       tags:
         - Marketplace
-      summary: Price suggestions
+      summary: Get Price suggestions
+      operationId: getPriceSuggestions
       description: >-
         Retrieve price suggestions for the provided Release ID. If no
         suggestions are available, an empty object will be returned.
@@ -1465,23 +1250,13 @@ paths:
 
         [https://www.discogs.com/developers/#page:marketplace,header:marketplace-price-suggestions](https://www.discogs.com/developers/#page:marketplace,header:marketplace-price-suggestions)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: release_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1492,6 +1267,7 @@ paths:
       tags:
         - Inventory Export
       summary: Export your inventory
+      operationId: exportYourInventory
       description: >-
         Request an export of your inventory as a CSV.
 
@@ -1499,23 +1275,12 @@ paths:
         [https://www.discogs.com/developers/#page:inventory-export,header:inventory-export-export-your-inventory](https://www.discogs.com/developers/#page:inventory-export,header:inventory-export-export-your-inventory)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
-      parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1524,26 +1289,16 @@ paths:
     get:
       tags:
         - Inventory Export
-      summary: Recent exports
+      summary: Get Recent exports
+      operationId: getRecentExports
       description: >-
         Get a list of all recent exports of your inventory. Accepts Pagination
         parameters.
 
 
         [https://www.discogs.com/developers/#page:inventory-export,header:inventory-export-get-recent-exports](https://www.discogs.com/developers/#page:inventory-export,header:inventory-export-get-recent-exports)
-      parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1554,29 +1309,20 @@ paths:
       tags:
         - Inventory Export
       summary: Get an export
+      operationId: getAnExport
       description: >-
         Get details about the status of an inventory export.
 
 
         [https://www.discogs.com/developers/#page:inventory-export,header:inventory-export-get-an-export](https://www.discogs.com/developers/#page:inventory-export,header:inventory-export-get-an-export)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1587,29 +1333,20 @@ paths:
       tags:
         - Inventory Export
       summary: Download an export
+      operationId: downloadAnExport
       description: >-
         Download the results of an inventory export.
 
 
         [https://www.discogs.com/developers/#page:inventory-export,header:inventory-export-download-an-export](https://www.discogs.com/developers/#page:inventory-export,header:inventory-export-download-an-export)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1620,6 +1357,7 @@ paths:
       tags:
         - Inventory Upload
       summary: Add inventory
+      operationId: addInventory
       description: >-
         Upload a CSV of listings to add to your inventory.
 
@@ -1627,23 +1365,12 @@ paths:
         [https://www.discogs.com/developers/#page:inventory-upload,header:inventory-upload-add-inventory](https://www.discogs.com/developers/#page:inventory-upload,header:inventory-upload-add-inventory)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
-      parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1654,6 +1381,7 @@ paths:
       tags:
         - Inventory Upload
       summary: Delete inventory
+      operationId: deleteInventory
       description: >-
         Upload a CSV of listings to delete from your inventory.
 
@@ -1661,23 +1389,12 @@ paths:
         [https://www.discogs.com/developers/#page:inventory-upload,header:inventory-upload-delete-inventory](https://www.discogs.com/developers/#page:inventory-upload,header:inventory-upload-delete-inventory)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
-      parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1687,26 +1404,16 @@ paths:
     get:
       tags:
         - Inventory Upload
-      summary: Recent uploads
+      summary: Get Recent uploads
+      operationId: getRecentUploads
       description: >-
         Get a list of all recent inventory uploads. Accepts Pagination
         parameters.
 
 
         [https://www.discogs.com/developers/#page:inventory-upload,header:inventory-upload-get-recent-uploads](https://www.discogs.com/developers/#page:inventory-upload,header:inventory-upload-get-recent-uploads)
-      parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1716,30 +1423,21 @@ paths:
     get:
       tags:
         - Inventory Upload
-      summary: Recent upload by ID
+      summary: Get Recent upload by ID
+      operationId: getRecentUploadById
       description: >-
         Get details about the status of an inventory upload.
 
 
         [https://www.discogs.com/developers/#page:inventory-upload,header:inventory-upload-get-an-upload](https://www.discogs.com/developers/#page:inventory-upload,header:inventory-upload-get-an-upload)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1749,7 +1447,8 @@ paths:
     get:
       tags:
         - User identity
-      summary: Identity
+      summary: Get Identity
+      operationId: getIdentity
       description: >-
         Retrieve basic information about the authenticated user.
 
@@ -1762,19 +1461,8 @@ paths:
 
 
         [https://www.discogs.com/developers/#page:user-identity,header:user-identity-identity](https://www.discogs.com/developers/#page:user-identity,header:user-identity-identity)
-      parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1784,7 +1472,8 @@ paths:
     get:
       tags:
         - User identity
-      summary: Profile
+      summary: Get Profile
+      operationId: getProfile
       description: >-
         Retrieve a user by username.
 
@@ -1799,23 +1488,13 @@ paths:
 
         [https://www.discogs.com/developers/#page:user-identity,header:user-identity-profile](https://www.discogs.com/developers/#page:user-identity,header:user-identity-profile)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1824,7 +1503,8 @@ paths:
     post:
       tags:
         - User identity
-      summary: Profile
+      summary: Update Profile
+      operationId: updateProfile
       description: >-
         Edit a user's profile data. Authentication as the user is required.
         Parameters must be filled in a json object inside the body. 
@@ -1833,28 +1513,18 @@ paths:
         [https://www.discogs.com/developers/#page:user-identity,header:user-identity-profile](https://www.discogs.com/developers/#page:user-identity,header:user-identity-profile)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1864,7 +1534,8 @@ paths:
     get:
       tags:
         - User identity
-      summary: User submissions
+      summary: Get User submissions
+      operationId: getUserSubmissions
       description: >-
         Retrieve a user's submissions by username. Accepts Pagination
         parameters.
@@ -1872,23 +1543,13 @@ paths:
 
         [https://www.discogs.com/developers/#page:user-identity,header:user-identity-user-submissions](https://www.discogs.com/developers/#page:user-identity,header:user-identity-user-submissions)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1898,7 +1559,8 @@ paths:
     get:
       tags:
         - User identity
-      summary: User contributions
+      summary: Get User contributions
+      operationId: getUserContributions
       description: >-
         Retrieve a user's contributions by username. Accepts Pagination
         parameters. The Contributions resource represents releases, labels, and
@@ -1907,23 +1569,13 @@ paths:
 
         [https://www.discogs.com/developers/#page:user-identity,header:user-identity-user-contributions](https://www.discogs.com/developers/#page:user-identity,header:user-identity-user-contributions)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1933,7 +1585,8 @@ paths:
     get:
       tags:
         - User Collection
-      summary: Collection
+      summary: Get Collection
+      operationId: getCollection
       description: >-
         Retrieve a list of folders in a user's collection. If the collection has
         been made private by its owner, authentication as the collection owner
@@ -1944,23 +1597,13 @@ paths:
 
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection](https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -1969,7 +1612,8 @@ paths:
     post:
       tags:
         - User Collection
-      summary: Collection
+      summary: Create Collection
+      operationId: createCollection
       description: >-
         Retrieve a list of folders in a user's collection. If the collection has
         been made private by its owner, authentication as the collection owner
@@ -1981,28 +1625,18 @@ paths:
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection](https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -2013,6 +1647,7 @@ paths:
       tags:
         - User Collection
       summary: List custom fields
+      operationId: listCustomFields
       description: >-
         Retrieve a list of user-defined collection notes fields. These fields
         are available on every release in the collection.
@@ -2028,16 +1663,6 @@ paths:
 
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-list-custom-fields](https://www.discogs.com/developers/#page:user-collection,header:user-collection-list-custom-fields)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
@@ -2049,7 +1674,7 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -2058,7 +1683,8 @@ paths:
     post:
       tags:
         - User Collection
-      summary: Collection folder
+      summary: Create Collection folder
+      operationId: createCollectionFolder
       description: >-
         Edit a folder's metadata. Folders 0 and 1 cannot be renamed.
         Authentication as the collection owner is required.
@@ -2067,21 +1693,11 @@ paths:
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder](https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
@@ -2093,7 +1709,7 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -2102,7 +1718,8 @@ paths:
     delete:
       tags:
         - User Collection
-      summary: Collection folder
+      summary: Delete Collection folder
+      operationId: deleteCollectionFolder
       description: >-
         Delete a folder from a user's collection. A folder must be empty before
         it can be deleted. Authentication as the collection owner is required.
@@ -2110,16 +1727,6 @@ paths:
 
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder](https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
@@ -2131,7 +1738,7 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -2141,7 +1748,8 @@ paths:
     get:
       tags:
         - User Collection
-      summary: Collection items by release
+      summary: Get Collection items by release
+      operationId: getCollectionItemsByRelease
       description: >-
         View the user's collection folders which contain a specified release.
         This will also show information about each release instance. The
@@ -2154,16 +1762,6 @@ paths:
 
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-items-by-release](https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-items-by-release)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
@@ -2175,7 +1773,7 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -2185,7 +1783,8 @@ paths:
     get:
       tags:
         - User Collection
-      summary: Collection items by folder
+      summary: Get Collection items by folder
+      operationId: getCollectionItemsByFolder
       description: >-
         Returns the list of item in a folder in a user's collection. Accepts
         Pagination parameters.
@@ -2206,28 +1805,18 @@ paths:
 
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-items-by-folder](https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-items-by-folder)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: sort
           in: query
           schema:
             type: string
           description: "Sort items by one of these fields: \n• label\n• artist\n• title\n• catno\n• format\n•\_rating\n• added\n• year"
-          example: "{sort}"
+          example: '{sort}'
         - name: sort_order
           in: query
           schema:
             type: string
           description: Sort items in a particular order (asc or desc)
-          example: "{sort_order}"
+          example: '{sort_order}'
         - name: username
           in: path
           schema:
@@ -2239,7 +1828,7 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -2250,6 +1839,7 @@ paths:
       tags:
         - User Collection
       summary: Add to collection folder
+      operationId: addToCollectionFolder
       description: >-
         Add a release to a folder in a user's collection.
 
@@ -2263,21 +1853,11 @@ paths:
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-add-to-collection-folder](https://www.discogs.com/developers/#page:user-collection,header:user-collection-add-to-collection-folder)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
@@ -2294,17 +1874,18 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
               schema:
                 type: object
-  ? /users/{username}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}
-  : post:
+  /users/{username}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}:
+    post:
       tags:
         - User Collection
       summary: Change rating of release
+      operationId: changeRatingOfRelease
       description: >-
         Change the rating on a release and/or move the instance to another
         folder.
@@ -2322,21 +1903,11 @@ paths:
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-change-rating-of-release](https://www.discogs.com/developers/#page:user-collection,header:user-collection-change-rating-of-release)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
@@ -2358,7 +1929,7 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -2368,6 +1939,7 @@ paths:
       tags:
         - User Collection
       summary: Delete instance from folder
+      operationId: deleteInstanceFromFolder
       description: >-
         Remove an instance of a release from a user's collection folder.
 
@@ -2381,16 +1953,6 @@ paths:
 
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-delete-instance-from-folder](https://www.discogs.com/developers/#page:user-collection,header:user-collection-delete-instance-from-folder)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
@@ -2412,17 +1974,18 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
               schema:
                 type: object
-  ? /users/{username}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}/fields/{field_id}{
-  : post:
+  /users/{username}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}/fields/{field_id}:
+    post:
       tags:
         - User Collection
       summary: Edit fields instance
+      operationId: editFieldsInstance
       description: >-
         Change the value of a notes field on a particular instance.
 
@@ -2430,25 +1993,16 @@ paths:
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-edit-fields-instance](https://www.discogs.com/developers/#page:user-collection,header:user-collection-edit-fields-instance)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: value
           in: query
           schema:
             type: string
+          example: '{value}'
         - name: username
           in: path
           schema:
@@ -2475,7 +2029,7 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -2486,6 +2040,7 @@ paths:
       tags:
         - User Collection
       summary: Collection value
+      operationId: collectionValue
       description: >-
         Returns the minimum, median, and maximum value of a user's collection.
 
@@ -2495,23 +2050,13 @@ paths:
 
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-value](https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-value)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -2521,7 +2066,8 @@ paths:
     get:
       tags:
         - User Wantlist
-      summary: Wantlist
+      summary: Get Wantlist
+      operationId: getWantlist
       description: >-
         Returns the list of releases in a user's wantlist. Accepts Pagination
         parameters.
@@ -2542,23 +2088,13 @@ paths:
 
         [https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-wantlist](https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-wantlist)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -2569,6 +2105,7 @@ paths:
       tags:
         - User Wantlist
       summary: Add to wantlist
+      operationId: addToWantlist
       description: >-
         Add a release to a user's wantlist. Additional parameters must be send
         as JSON object inside the request body.
@@ -2580,21 +2117,11 @@ paths:
         [https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-add-to-wantlist](https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-add-to-wantlist)
       requestBody:
         content:
-          "*/*":
+          '*/*':
             schema:
               type: string
               example: '""'
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
@@ -2606,7 +2133,7 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -2616,6 +2143,7 @@ paths:
       tags:
         - User Wantlist
       summary: Delete release from wantlist
+      operationId: deleteReleaseFromWantlist
       description: >-
         Delete a release from a user's wantlist.
 
@@ -2625,16 +2153,6 @@ paths:
 
         [https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-add-to-wantlist](https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-add-to-wantlist)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
@@ -2646,7 +2164,7 @@ paths:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -2656,7 +2174,8 @@ paths:
     get:
       tags:
         - User Lists
-      summary: User Lists
+      summary: Get User Lists
+      operationId: getUserLists
       description: >-
         Returns a User's Lists. Private Lists will only display when
         authenticated as the owner. Accepts Pagination parameters.
@@ -2664,23 +2183,13 @@ paths:
 
         [https://www.discogs.com/developers/#page:user-lists,header:user-lists-user-lists](https://www.discogs.com/developers/#page:user-lists,header:user-lists-user-lists)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: username
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
@@ -2690,7 +2199,8 @@ paths:
     get:
       tags:
         - User Lists
-      summary: List
+      summary: Get List
+      operationId: getList
       description: >-
         Returns items from a specified List. Private Lists will only display
         when authenticated as the owner.
@@ -2698,25 +2208,2263 @@ paths:
 
         [https://www.discogs.com/developers/#page:user-lists,header:user-lists-list](https://www.discogs.com/developers/#page:user-lists,header:user-lists-list)
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: User-Agent
-          in: header
-          schema:
-            type: string
-          example: "{{user_agent}}"
         - name: list_id
           in: path
           schema:
             type: string
           required: true
       responses:
-        "200":
+        '200':
           description: Successful response
           content:
             application/json:
               schema:
                 type: object
+components:
+  schemas:
+    Artist:
+      type: object
+      properties:
+        profile:
+          type: string
+          example: "Heavy metal band from Ventura, California.  The band was formed in
+            1972 by Robert W. Garven Jr.(drums, graphic artist, sometimes lyricist),
+            Jerry Fogle (guitar, R.I.P.) and Greg Lindstrom (bass, guitars, keyboards,
+            songwriter).  They broke up in May 1992.\r
+      
+            \r
+      
+            The name is from [a=J.R.R. Tolkien]’s manufactured language of Middle
+            Earth, Cirith Ungol translates out as \"pass of the spider\".\r
+      
+            \r
+      
+            The Final Lineup:\r
+      
+            Tim Baker - Vocals\r
+      
+            Jim Barraza - Guitars\r
+      
+            Vernon Green - Bass\r
+      
+            Robert Garven - Drums\r
+      
+            \r
+      
+            Former members:\r
+      
+            Neal Beattie - Vocals\r
+      
+            Jerry Fogle  - Guitars (died August 20, 1998)\r
+      
+            Greg Lindstrom - Guitars\r
+      
+            Michael \"Flint\" Vujejia - Bass\n"
+        releases_url:
+          type: string
+          example: http://api.discogs.com/artists/313929/releases
+        name:
+          type: string
+          example: Cirith Ungol
+        uri:
+          type: string
+          example: http://www.discogs.com/artist/313929-Cirith-Ungol
+        members:
+          type: array
+          items:
+            type: object
+            properties:
+              active:
+                type: boolean
+                example: false
+              resource_url:
+                type: string
+                example: http://api.discogs.com/artists/505331
+              id:
+                type: integer
+                format: int32
+                example: 505331
+              name:
+                type: string
+                example: Greg Lindstrom
+        urls:
+          type: array
+          items:
+            type: string
+            example: http://www.truemetal.org/cirithungol
+        images:
+          type: array
+          items:
+            type: object
+            properties:
+              uri:
+                type: string
+                example: http://api.discogs.com/image/A-313929-1125278679.jpg
+              height:
+                type: integer
+                format: int32
+                example: 288
+              width:
+                type: integer
+                format: int32
+                example: 360
+              resource_url:
+                type: string
+                example: http://api.discogs.com/image/A-313929-1125278679.jpg
+              type:
+                type: string
+                example: secondary
+              uri150:
+                type: string
+                example: http://api.discogs.com/image/A-150-313929-1125278679.jpg
+        resource_url:
+          type: string
+          example: http://api.discogs.com/artists/313929
+        id:
+          type: integer
+          format: int32
+          example: 313929
+        data_quality:
+          type: string
+          example: Correct
+    ArtistReleases:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            per_page:
+              type: integer
+              format: int32
+              example: 50
+            items:
+              type: integer
+              format: int32
+              example: 37
+            page:
+              type: integer
+              format: int32
+              example: 1
+            urls:
+              type: object
+              properties: {}
+            pages:
+              type: integer
+              format: int32
+              example: 1
+        releases:
+          type: array
+          items:
+            type: object
+            properties:
+              thumb:
+                type: string
+                example: http://api.discogs.com/image/R-150-4521828-1367337210-6154.jpeg
+              artist:
+                type: string
+                example: Cirith Ungol
+              main_release:
+                type: integer
+                format: int32
+                example: 4521828
+              title:
+                type: string
+                example: Frost And Fire
+              role:
+                type: string
+                example: Main
+              year:
+                type: integer
+                format: int32
+                example: 1981
+              resource_url:
+                type: string
+                example: http://api.discogs.com/masters/253625
+              type:
+                type: string
+                example: master
+              id:
+                type: integer
+                format: int32
+                example: 253625
+    Fields:
+      type: object
+      properties:
+        fields:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                example: 1
+              name:
+                type: string
+                example: Media Condition
+              position:
+                type: integer
+                format: int32
+                example: 1
+              public:
+                type: boolean
+                example: true
+              type:
+                type: string
+                example: dropdown
+              options:
+                type: array
+                items:
+                  type: string
+                  example: Mint (M)
+    Folder:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 232842
+        name:
+          type: string
+          example: My New Folder
+        count:
+          type: integer
+          format: int32
+          example: 0
+        resource_url:
+          type: string
+          example: http://api.discogs.com/users/abuntine/collection/folders/232842
+    Identity:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        username:
+          type: string
+          example: example
+        resource_url:
+          type: string
+          example: http://api.discogs.com/users/example
+        consumer_name:
+          type: string
+          example: Your Application Name
+    Label:
+      type: object
+      properties:
+        profile:
+          type: string
+          example: "Label Code: LC 0392 / LC 00392\r
+      
+            \r
+      
+            Founded in 1958 by Jack Warner as a soundtrack factory for Warner Bros.
+            movie studios, Warner Bros. Records and its family of subsidiary labels,
+            which includes Reprise Records, Sire Records, Maverick Records, Warner
+            Nashville, Warner Jazz, Warner Western, and Word Label Group now
+            encompasses a full spectrum of musical genres.\r
+      
+            ----\r
+      
+            Known to have used [l403953] for pressing.\r
+      
+            \r
+      
+            [u]A NOTE ON U.S. CATALOGUE NUMBERS:[/u]\r
+      
+            Many U.S. releases on this label will have two separate catalogue
+            numbers.  Catalogue numbers printed on the packaging are typically in the
+            format 9 [b]#####[/b]-[i]#[/i], while numbers printed on the media itself
+            are typically in the format [i]#[/i]-[b]#####[/b].  For example, a release
+            listed as 0-12345 on the center label of a record may also be listed as 9
+            12345-0 on the picture sleeve.  Please be sure to double-check both
+            versions of the catalogue number before attempting to add your release, to
+            prevent duplicates.  If both numbers are listed on a release, enter the
+            [i]#[/i]-[b]#####[/b] form on the first label line, and the 9
+            [b]#####[/b]-[i]#[/i] form on the second label line.\r
+      
+            \r
+      
+            [U]Information about how to determine first pressings of US LP's on this
+            label[/U]:\r
+      
+            \r
+      
+            Grey label, black WB Shield, WB in gold print # 1200 - approx. 1470\r
+      
+            Same, but in white print # 1470 - 1615\r
+      
+            Gold Label # 1616 - 1737 (last spotted gold label)\r
+      
+            Green Label, Warner Bros. - Seven Arts Records, W7 logo # 1738 - 1834\r
+      
+            Green Label, Warner Bros. Records. w/ WB Shield # 1835 - 2692 (last
+            spotted green label)\r
+      
+            Palm Trees Label NO ADDRESS at bottom # 2693 - 2865\r
+      
+            Palm Trees Label 3300 Warner Blvd. # 2866 - 3180\r
+      
+            Cream Label w/lines and address in perimeter # 3181 - ?\r
+      
+            Cream Label no lines everything since 1983\r
+      
+            \r
+      
+            Source: Joe Lindsay's ''Record Label Guide'' and Raymond Dumont's
+            collection.\r\n"
+        releases_url:
+          type: string
+          example: http://api.discogs.com/labels/1000/releases
+        name:
+          type: string
+          example: Warner Bros. Records
+        contact_info:
+          type: string
+          example: "3300 Warner Boulevard\r
+      
+            Burbank, CA 91505-4964\r
+      
+            USA\r
+      
+            \r
+      
+            1290 Avenue of the Americas\r
+      
+            New York, NY 10104-0012\r
+      
+            USA\r
+      
+            \r
+      
+            (818) 846-9090\r\n"
+        parent_label:
+          type: object
+          properties:
+            resource_url:
+              type: string
+              example: http://api.discogs.com/labels/2345
+            id:
+              type: integer
+              format: int32
+              example: 2345
+            name:
+              type: string
+              example: Warner Music Group
+        uri:
+          type: string
+          example: http://www.discogs.com/label/1000-Warner-Bros-Records
+        sublabels:
+          type: array
+          items:
+            type: object
+            properties:
+              resource_url:
+                type: string
+                example: http://api.discogs.com/labels/195500
+              id:
+                type: integer
+                format: int32
+                example: 195500
+              name:
+                type: string
+                example: 1017 Brick Squad Records
+        urls:
+          type: array
+          items:
+            type: string
+            example: http://www.warnerbrosrecords.com/
+        images:
+          type: array
+          items:
+            type: object
+            properties:
+              uri:
+                type: string
+                example: http://api.discogs.com/image/L-1000-1379032089-6536.jpeg
+              height:
+                type: integer
+                format: int32
+                example: 780
+              width:
+                type: integer
+                format: int32
+                example: 600
+              resource_url:
+                type: string
+                example: http://api.discogs.com/image/L-1000-1379032089-6536.jpeg
+              type:
+                type: string
+                example: primary
+              uri150:
+                type: string
+                example: http://api.discogs.com/image/L-150-1000-1379032089-6536.jpeg
+        resource_url:
+          type: string
+          example: http://api.discogs.com/labels/1000
+        id:
+          type: integer
+          format: int32
+          example: 1000
+        data_quality:
+          type: string
+          example: Needs Vote
+    LabelReleases:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            per_page:
+              type: integer
+              format: int32
+              example: 50
+            items:
+              type: integer
+              format: int32
+              example: 8
+            page:
+              type: integer
+              format: int32
+              example: 1
+            urls:
+              type: object
+              properties: {}
+            pages:
+              type: integer
+              format: int32
+              example: 1
+        releases:
+          type: array
+          items:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Accepted
+              thumb:
+                type: string
+                example: http://api.discogs.com/image/R-150-306002-1259674532.jpeg
+              format:
+                type: string
+                example: 12"
+              title:
+                type: string
+                example: I'll Nostra Tempo De La Vita / Having The Time Of Your Life
+              catno:
+                type: string
+                example: SSS 001
+              resource_url:
+                type: string
+                example: http://api.discogs.com/releases/306002
+              artist:
+                type: string
+                example: Torfinn
+              id:
+                type: integer
+                format: int32
+                example: 306002
+    Listing:
+      type: object
+      properties:
+        status:
+          type: string
+          example: For Sale
+        weight:
+          type: integer
+          format: int32
+          example: 239
+        price:
+          type: object
+          properties:
+            currency:
+              type: string
+              example: EUR
+            value:
+              type: number
+              example: 32.9
+        allow_offers:
+          type: boolean
+          example: false
+        sleeve_condition:
+          type: string
+          example: Near Mint (NM or M-)
+        id:
+          type: integer
+          format: int32
+          example: 157624565
+        condition:
+          type: string
+          example: Near Mint (NM or M-)
+        posted:
+          type: string
+          format: date-time
+          example: 2014-05-01T09:46:06
+        ships_from:
+          type: string
+          example: Greece
+        uri:
+          type: string
+          example: http://www.discogs.com/sell/item/157624565
+        comments:
+          type: string
+          example: ""
+        seller:
+          type: object
+          properties:
+            username:
+              type: string
+              example: EmpireDVDs
+            resource_url:
+              type: string
+              example: http://api.discogs.com/users/EmpireDVDs
+            id:
+              type: integer
+              format: int32
+              example: 1489502
+        release:
+          type: object
+          properties:
+            catalog_number:
+              type: string
+              example: ER 006
+            resource_url:
+              type: string
+              example: http://api.discogs.com/releases/5643093
+            year:
+              type: integer
+              format: int32
+              example: 2014
+            id:
+              type: integer
+              format: int32
+              example: 5643093
+            description:
+              type: string
+              example: Medieval Steel - Dark Castle (LP, Album)
+        resource_url:
+          type: string
+          example: http://api.discogs.com/marketplace/listings/157624565
+        audio:
+          type: boolean
+          example: false
+    MasterRelease:
+      type: object
+      properties:
+        styles:
+          type: array
+          items:
+            type: string
+            example: Prog Rock
+        genres:
+          type: array
+          items:
+            type: string
+            example: Rock
+        videos:
+          type: array
+          items:
+            type: object
+            properties:
+              duration:
+                type: integer
+                format: int32
+                example: 1042
+              description:
+                type: string
+                example: Synkopy - Introdukce / Hůl v slunečních hodinách / Jsi nádherně pravěká
+              embed:
+                type: boolean
+                example: true
+              uri:
+                type: string
+                example: http://www.youtube.com/watch?v=cND9H05yJio
+              title:
+                type: string
+                example: Synkopy - Introdukce / Hůl v slunečních hodinách / Jsi nádherně pravěká
+        title:
+          type: string
+          example: Sluneční Hodiny
+        main_release:
+          type: integer
+          format: int32
+          example: 5160870
+        main_release_url:
+          type: string
+          example: http://api.discogs.com/releases/5160870
+        uri:
+          type: string
+          example: http://www.discogs.com/Synkopy-Old%C5%99ich-Vesel%C3%BD-Slune%C4%8Dn%C3%AD-Hodiny/master/9800
+        artists:
+          type: array
+          items:
+            type: object
+            properties:
+              join:
+                type: string
+                example: "&"
+              name:
+                type: string
+                example: Synkopy
+              anv:
+                type: string
+                example: ""
+              tracks:
+                type: string
+                example: ""
+              role:
+                type: string
+                example: ""
+              resource_url:
+                type: string
+                example: http://api.discogs.com/artists/1249324
+              id:
+                type: integer
+                format: int32
+                example: 1249324
+        versions_url:
+          type: string
+          example: http://api.discogs.com/masters/9800/versions
+        year:
+          type: integer
+          format: int32
+          example: 1982
+        images:
+          type: array
+          items:
+            type: object
+            properties:
+              uri:
+                type: string
+                example: http://api.discogs.com/image/R-5160870-1386155216-1153.jpeg
+              height:
+                type: integer
+                format: int32
+                example: 607
+              width:
+                type: integer
+                format: int32
+                example: 600
+              resource_url:
+                type: string
+                example: http://api.discogs.com/image/R-5160870-1386155216-1153.jpeg
+              type:
+                type: string
+                example: primary
+              uri150:
+                type: string
+                example: http://api.discogs.com/image/R-150-5160870-1386155216-1153.jpeg
+        resource_url:
+          type: string
+          example: http://api.discogs.com/masters/9800
+        tracklist:
+          type: array
+          items:
+            type: object
+            properties:
+              duration:
+                type: string
+                example: 2:56
+              position:
+                type: string
+                example: A1
+              type_:
+                type: string
+                example: track
+              extraartists:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    join:
+                      type: string
+                      example: ""
+                    name:
+                      type: string
+                      example: Oldřich Veselý
+                    anv:
+                      type: string
+                      example: ""
+                    tracks:
+                      type: string
+                      example: ""
+                    role:
+                      type: string
+                      example: Music By
+                    resource_url:
+                      type: string
+                      example: http://api.discogs.com/artists/942277
+                    id:
+                      type: integer
+                      format: int32
+                      example: 942277
+              title:
+                type: string
+                example: Introdukce
+        id:
+          type: integer
+          format: int32
+          example: 9800
+        data_quality:
+          type: string
+          example: Correct
+    MasterReleaseVersions:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            per_page:
+              type: integer
+              format: int32
+              example: 50
+            items:
+              type: integer
+              format: int32
+              example: 3
+            page:
+              type: integer
+              format: int32
+              example: 1
+            urls:
+              type: object
+              properties: {}
+            pages:
+              type: integer
+              format: int32
+              example: 1
+        versions:
+          type: array
+          items:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Accepted
+              thumb:
+                type: string
+                example: http://api.discogs.com/image/R-150-5160870-1386155216-1153.jpeg
+              title:
+                type: string
+                example: Sluneční Hodiny
+              country:
+                type: string
+                example: Czechoslovakia
+              format:
+                type: string
+                example: LP, Album, RP
+              label:
+                type: string
+                example: Panton
+              released:
+                type: string
+                format: date
+                example: "1982"
+              catno:
+                type: string
+                example: 8113 0078
+              resource_url:
+                type: string
+                example: http://api.discogs.com/releases/5160870
+              id:
+                type: integer
+                format: int32
+                example: 5160870
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1-1
+        resource_url:
+          type: string
+          example: http://api.discogs.com/marketplace/orders/1-1
+        messages_url:
+          type: string
+          example: http://api.discogs.com/marketplace/orders/1-1/messages
+        uri:
+          type: string
+          example: http://www.discogs.com/sell/order/1-1
+        status:
+          type: string
+          example: New Order
+        next_status:
+          type: array
+          items:
+            type: string
+            example: New Order
+        fee:
+          type: object
+          properties:
+            currency:
+              type: string
+              example: USD
+            value:
+              type: number
+              example: 2.52
+        created:
+          type: string
+          format: date-time
+          example: 2011-10-21T09:25:17
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              release:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    example: 1
+                  description:
+                    type: string
+                    example: Persuader, The - Stockholm (2x12")
+              price:
+                type: object
+                properties:
+                  currency:
+                    type: string
+                    example: USD
+                  value:
+                    type: integer
+                    format: int32
+                    example: 42
+              id:
+                type: integer
+                format: int32
+                example: 41578242
+        shipping:
+          type: object
+          properties:
+            currency:
+              type: string
+              example: USD
+            value:
+              type: integer
+              format: int32
+              example: 0
+        shipping_address:
+          type: string
+          example: |-
+            Asdf Exampleton
+            234 NE Asdf St.
+            Asdf Town, Oregon, 14423
+            United States
+      
+            Phone: 555-555-2733
+            Paypal address: asdf@example.com
+        additional_instructions:
+          type: string
+          example: please use sturdy packaging.
+        seller:
+          type: object
+          properties:
+            resource_url:
+              type: string
+              example: http://api.discogs.com/users/example_seller
+            username:
+              type: string
+              example: example_seller
+            id:
+              type: integer
+              format: int32
+              example: 1
+        last_activity:
+          type: string
+          format: date-time
+          example: 2011-10-21T09:25:17
+        buyer:
+          type: object
+          properties:
+            resource_url:
+              type: string
+              example: http://api.discogs.com/users/example_buyer
+            username:
+              type: string
+              example: example_buyer
+            id:
+              type: integer
+              format: int32
+              example: 2
+        total:
+          type: object
+          properties:
+            currency:
+              type: string
+              example: USD
+            value:
+              type: integer
+              format: int32
+              example: 42
+    Orders:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            per_page:
+              type: integer
+              format: int32
+              example: 50
+            pages:
+              type: integer
+              format: int32
+              example: 1
+            page:
+              type: integer
+              format: int32
+              example: 1
+            items:
+              type: integer
+              format: int32
+              example: 1
+            urls:
+              type: object
+              properties: {}
+        orders:
+          type: array
+          items:
+            type: object
+            properties:
+              status:
+                type: string
+                example: New Order
+              fee:
+                type: object
+                properties:
+                  currency:
+                    type: string
+                    example: USD
+                  value:
+                    type: number
+                    example: 2.52
+              created:
+                type: string
+                format: date-time
+                example: 2011-10-21T09:25:17
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    release:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int32
+                          example: 1
+                        description:
+                          type: string
+                          example: Persuader, The - Stockholm (2x12")
+                    price:
+                      type: object
+                      properties:
+                        currency:
+                          type: string
+                          example: USD
+                        value:
+                          type: integer
+                          format: int32
+                          example: 42
+                    id:
+                      type: integer
+                      format: int32
+                      example: 41578242
+              shipping:
+                type: object
+                properties:
+                  currency:
+                    type: string
+                    example: USD
+                  value:
+                    type: integer
+                    format: int32
+                    example: 0
+              shipping_address:
+                type: string
+                example: |-
+                  Asdf Exampleton
+                  234 NE Asdf St.
+                  Asdf Town, Oregon, 14423
+                  United States
+      
+                  Phone: 555-555-2733
+                  Paypal address: asdf@example.com
+              additional_instructions:
+                type: string
+                example: please use sturdy packaging.
+              seller:
+                type: object
+                properties:
+                  resource_url:
+                    type: string
+                    example: http://api.discogs.com/users/example_seller
+                  username:
+                    type: string
+                    example: example_seller
+                  id:
+                    type: integer
+                    format: int32
+                    example: 1
+              last_activity:
+                type: string
+                format: date-time
+                example: 2011-10-21T09:25:17
+              buyer:
+                type: object
+                properties:
+                  resource_url:
+                    type: string
+                    example: http://api.discogs.com/users/example_buyer
+                  username:
+                    type: string
+                    example: example_buyer
+                  id:
+                    type: integer
+                    format: int32
+                    example: 2
+              total:
+                type: object
+                properties:
+                  currency:
+                    type: string
+                    example: USD
+                  value:
+                    type: integer
+                    format: int32
+                    example: 42
+              id:
+                type: string
+                example: 1-1
+              resource_url:
+                type: string
+                example: http://api.discogs.com/marketplace/orders/1-1
+              messages_url:
+                type: string
+                example: http://api.discogs.com/marketplace/orders/1-1/messages
+              uri:
+                type: string
+                example: http://www.discogs.com/sell/order/1-1
+              next_status:
+                type: array
+                items:
+                  type: string
+                  example: New Order
+    OrderMessages:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            per_page:
+              type: integer
+              format: int32
+              example: 50
+            pages:
+              type: integer
+              format: int32
+              example: 1
+            page:
+              type: integer
+              format: int32
+              example: 1
+            urls:
+              type: object
+              properties: {}
+            items:
+              type: integer
+              format: int32
+              example: 7
+        messages:
+          type: array
+          items:
+            type: object
+            properties:
+              from:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    example: example_seller
+                  resource_url:
+                    type: string
+                    example: http://api.discogs.com/users/example_seller
+              message:
+                type: string
+                example: |-
+                  Seller changed status from Invoice Sent to Payment Received
+      
+                  That was fast, thanks!
+              order:
+                type: object
+                properties:
+                  resource_url:
+                    type: string
+                    example: http://api.discogs.com/marketplace/orders/1-1
+                  id:
+                    type: string
+                    example: 1-1
+              timestamp:
+                type: string
+                format: date-time
+                example: 2011-11-17T14:55:52
+              subject:
+                type: string
+                example: "Discogs Order #1-1, Stockholm"
+    PriceSuggestions:
+      type: object
+      properties:
+        Very Good (VG):
+          type: object
+          properties:
+            currency:
+              type: string
+              example: USD
+            value:
+              type: number
+              example: 6.7827501
+        Good Plus (G+):
+          type: object
+          properties:
+            currency:
+              type: string
+              example: USD
+            value:
+              type: number
+              example: 3.7681945000000003
+        Near Mint (NM or M-):
+          type: object
+          properties:
+            currency:
+              type: string
+              example: USD
+            value:
+              type: number
+              example: 12.8118613
+        Good (G):
+          type: object
+          properties:
+            currency:
+              type: string
+              example: USD
+            value:
+              type: number
+              example: 2.2609167
+        Very Good Plus (VG+):
+          type: object
+          properties:
+            currency:
+              type: string
+              example: USD
+            value:
+              type: number
+              example: 9.7973057
+        Mint (M):
+          type: object
+          properties:
+            currency:
+              type: string
+              example: USD
+            value:
+              type: number
+              example: 14.319139100000001
+        Fair (F):
+          type: object
+          properties:
+            currency:
+              type: string
+              example: USD
+            value:
+              type: number
+              example: 1.5072778000000002
+        Poor (P):
+          type: object
+          properties:
+            currency:
+              type: string
+              example: USD
+            value:
+              type: number
+              example: 0.7536389000000001
+    Release:
+      type: object
+      properties:
+        status:
+          type: string
+          example: Accepted
+        styles:
+          type: array
+          items:
+            type: string
+            example: Deep House
+        videos:
+          type: array
+          items:
+            type: object
+            properties:
+              duration:
+                type: integer
+                format: int32
+                example: 380
+              description:
+                type: string
+                example: The Persuader - Vasastaden
+              embed:
+                type: boolean
+                example: true
+              uri:
+                type: string
+                example: http://www.youtube.com/watch?v=5rA8CTKKEP4
+              title:
+                type: string
+                example: The Persuader - Vasastaden
+        series:
+          type: array
+          items:
+            type: string
+            format: nullable
+        released_formatted:
+          type: string
+          example: Mar 1999
+        labels:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                example: 5
+              resource_url:
+                type: string
+                example: http://api.discogs.com/labels/5
+              catno:
+                type: string
+                example: SK032
+              name:
+                type: string
+                example: Svek
+              entity_type:
+                type: string
+                example: "1"
+        estimated_weight:
+          type: integer
+          format: int32
+          example: 460
+        community:
+          type: object
+          properties:
+            status:
+              type: string
+              example: Accepted
+            rating:
+              type: object
+              properties:
+                count:
+                  type: integer
+                  format: int32
+                  example: 91
+                average:
+                  type: number
+                  example: 4.48
+            have:
+              type: integer
+              format: int32
+              example: 310
+            contributors:
+              type: array
+              items:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    example: teo
+                  resource_url:
+                    type: string
+                    example: http://api.discogs.com/users/teo
+            want:
+              type: integer
+              format: int32
+              example: 332
+            submitter:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: teo
+                resource_url:
+                  type: string
+                  example: http://api.discogs.com/users/teo
+            data_quality:
+              type: string
+              example: Complete and Correct
+        released:
+          type: string
+          example: 1999-03-00
+        master_url:
+          type: string
+          example: http://api.discogs.com/masters/5427
+        year:
+          type: integer
+          format: int32
+          example: 1999
+        images:
+          type: array
+          items:
+            type: object
+            properties:
+              uri:
+                type: string
+                example: http://api.discogs.com/image/R-1-1193812031.jpeg
+              height:
+                type: integer
+                format: int32
+                example: 600
+              width:
+                type: integer
+                format: int32
+                example: 600
+              resource_url:
+                type: string
+                example: http://api.discogs.com/image/R-1-1193812031.jpeg
+              type:
+                type: string
+                example: primary
+              uri150:
+                type: string
+                example: http://api.discogs.com/image/R-150-1-1193812031.jpeg
+        format_quantity:
+          type: integer
+          format: int32
+          example: 2
+        id:
+          type: integer
+          format: int32
+          example: 1
+        genres:
+          type: array
+          items:
+            type: string
+            example: Electronic
+        thumb:
+          type: string
+          example: http://api.discogs.com/image/R-150-1-1193812031.jpeg
+        extraartists:
+          type: array
+          items:
+            type: object
+            properties:
+              join:
+                type: string
+                example: ""
+              name:
+                type: string
+                example: Jesper Dahlbäck
+              anv:
+                type: string
+                example: ""
+              tracks:
+                type: string
+                example: ""
+              role:
+                type: string
+                example: Music By [All Tracks By]
+              resource_url:
+                type: string
+                example: http://api.discogs.com/artists/239
+              id:
+                type: integer
+                format: int32
+                example: 239
+        title:
+          type: string
+          example: Stockholm
+        country:
+          type: string
+          example: Sweden
+        notes:
+          type: string
+          example: "The song titles are the names of Stockholm's districts.\r\n"
+        identifiers:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                example: Matrix / Runout
+              description:
+                type: string
+                example: A-Side
+              value:
+                type: string
+                example: MPO SK 032 A1 G PHRUPMASTERGENERAL T27 LONDON
+        companies:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: The Globe Studios
+              entity_type:
+                type: string
+                example: "23"
+              catno:
+                type: string
+                example: ""
+              resource_url:
+                type: string
+                example: http://api.discogs.com/labels/271046
+              id:
+                type: integer
+                format: int32
+                example: 271046
+              entity_type_name:
+                type: string
+                example: Recorded At
+        uri:
+          type: string
+          example: http://www.discogs.com/Persuader-Stockholm/release/1
+        artists:
+          type: array
+          items:
+            type: object
+            properties:
+              join:
+                type: string
+                example: ""
+              name:
+                type: string
+                example: Persuader, The
+              anv:
+                type: string
+                example: ""
+              tracks:
+                type: string
+                example: ""
+              role:
+                type: string
+                example: ""
+              resource_url:
+                type: string
+                example: http://api.discogs.com/artists/1
+              id:
+                type: integer
+                format: int32
+                example: 1
+        formats:
+          type: array
+          items:
+            type: object
+            properties:
+              descriptions:
+                type: array
+                items:
+                  type: string
+                  example: 12"
+              name:
+                type: string
+                example: Vinyl
+              qty:
+                type: string
+                example: "2"
+        resource_url:
+          type: string
+          example: http://api.discogs.com/releases/1
+        master_id:
+          type: integer
+          format: int32
+          example: 5427
+        tracklist:
+          type: array
+          items:
+            type: object
+            properties:
+              duration:
+                type: string
+                example: 4:45
+              position:
+                type: string
+                example: A
+              type_:
+                type: string
+                example: track
+              title:
+                type: string
+                example: Östermalm
+        data_quality:
+          type: string
+          example: Complete and Correct
+    SearchResults:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            per_page:
+              type: integer
+              format: int32
+              example: 50
+            items:
+              type: integer
+              format: int32
+              example: 4
+            page:
+              type: integer
+              format: int32
+              example: 1
+            urls:
+              type: object
+              properties: {}
+            pages:
+              type: integer
+              format: int32
+              example: 1
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              style:
+                type: array
+                items:
+                  type: string
+                  example: Black Metal
+              thumb:
+                type: string
+                example: http://api.discogs.com/image/R-90-2633081-1294211425.jpeg
+              format:
+                type: array
+                items:
+                  type: string
+                  example: Cassette
+              country:
+                type: string
+                example: Germany
+              title:
+                type: string
+                example: Moonblood - The Winter Falls Over The Land
+              uri:
+                type: string
+                example: /Moonblood-The-Winter-Falls-Over-The-Land/release/2633081
+              label:
+                type: array
+                items:
+                  type: string
+                  example: Gospel Of The Witches Promotions
+              catno:
+                type: string
+                example: none
+              year:
+                type: string
+                format: date
+                example: "1995"
+              genre:
+                type: array
+                items:
+                  type: string
+                  example: Rock
+              resource_url:
+                type: string
+                example: http://api.discogs.com/releases/2633081
+              type:
+                type: string
+                example: release
+              id:
+                type: integer
+                format: int32
+                example: 2633081
+    User:
+      type: object
+      properties:
+        profile:
+          type: string
+          example: ""
+        wantlist_url:
+          type: string
+          example: http://api.discogs.com/users/abuntine/wants
+        rank:
+          type: integer
+          format: int32
+          example: 1
+        num_pending:
+          type: integer
+          format: int32
+          example: 0
+        id:
+          type: integer
+          format: int32
+          example: 556853
+        num_for_sale:
+          type: integer
+          format: int32
+          example: 0
+        home_page:
+          type: string
+          example: ""
+        location:
+          type: string
+          example: ""
+        collection_folders_url:
+          type: string
+          example: http://api.discogs.com/users/abuntine/collection/folders
+        username:
+          type: string
+          example: abuntine
+        collection_fields_url:
+          type: string
+          example: http://api.discogs.com/users/abuntine/collection/fields
+        releases_contributed:
+          type: integer
+          format: int32
+          example: 0
+        registered:
+          type: string
+          format: date-time
+          example: 2009-06-10T04:37:02
+        rating_avg:
+          type: number
+          example: 4.46
+        num_collection:
+          type: integer
+          format: int32
+          example: 309
+        releases_rated:
+          type: integer
+          format: int32
+          example: 13
+        num_lists:
+          type: integer
+          format: int32
+          example: 0
+        name:
+          type: string
+          example: ""
+        num_wantlist:
+          type: integer
+          format: int32
+          example: 77
+        inventory_url:
+          type: string
+          example: http://api.discogs.com/users/abuntine/inventory
+        uri:
+          type: string
+          example: http://www.discogs.com/user/abuntine
+        resource_url:
+          type: string
+          example: http://api.discogs.com/users/abuntine
+    UserCollection:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            per_page:
+              type: integer
+              format: int32
+              example: 5
+            items:
+              type: integer
+              format: int32
+              example: 309
+            page:
+              type: integer
+              format: int32
+              example: 1
+            urls:
+              type: object
+              properties:
+                last:
+                  type: string
+                  example: http://api.discogs.com/users/abuntine/collection/folders/0/releases?per_page=5&page=62
+                next:
+                  type: string
+                  example: http://api.discogs.com/users/abuntine/collection/folders/0/releases?per_page=5&page=2
+            pages:
+              type: integer
+              format: int32
+              example: 62
+        releases:
+          type: array
+          items:
+            type: object
+            properties:
+              instance_id:
+                type: integer
+                format: int32
+                example: 1
+              rating:
+                type: integer
+                format: int32
+                example: 0
+              basic_information:
+                type: object
+                properties:
+                  labels:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int32
+                          example: 157702
+                        resource_url:
+                          type: string
+                          example: http://api.discogs.com/labels/157702
+                        catno:
+                          type: string
+                          example: SR 0001-1311
+                        name:
+                          type: string
+                          example: Šot Records
+                        entity_type:
+                          type: string
+                          example: "1"
+                  formats:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        descriptions:
+                          type: array
+                          items:
+                            type: string
+                            example: LP
+                        name:
+                          type: string
+                          example: Vinyl
+                        qty:
+                          type: string
+                          example: "1"
+                  thumb:
+                    type: string
+                    example: http://api.discogs.com/image/R-150-1845027-1324771045.jpeg
+                  title:
+                    type: string
+                    example: Skimmed - New Insanity
+                  artists:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        join:
+                          type: string
+                          example: ""
+                        name:
+                          type: string
+                          example: Skimmed
+                        anv:
+                          type: string
+                          example: ""
+                        tracks:
+                          type: string
+                          example: ""
+                        role:
+                          type: string
+                          example: ""
+                        resource_url:
+                          type: string
+                          example: http://api.discogs.com/artists/982750
+                        id:
+                          type: integer
+                          format: int32
+                          example: 982750
+                  resource_url:
+                    type: string
+                    example: http://api.discogs.com/releases/1845027
+                  year:
+                    type: integer
+                    format: int32
+                    example: 1990
+                  id:
+                    type: integer
+                    format: int32
+                    example: 1845027
+              id:
+                type: integer
+                format: int32
+                example: 1845027
+    UserFolder:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        count:
+          type: integer
+          format: int32
+          example: 20
+        name:
+          type: string
+          example: Uncategorized
+        resource_url:
+          type: string
+          example: http://api.discogs.com/users/example/collection/folders/1
+    UserFolders:
+      type: object
+      properties:
+        folders:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                example: 0
+              count:
+                type: integer
+                format: int32
+                example: 23
+              name:
+                type: string
+                example: All
+              resource_url:
+                type: string
+                example: http://api.discogs.com/users/example/collection/folders/0
+    UserInventory:
+      type: object
+      properties:
+        pagination:
+          type: object
+          properties:
+            per_page:
+              type: integer
+              format: int32
+              example: 50
+            pages:
+              type: integer
+              format: int32
+              example: 1
+            page:
+              type: integer
+              format: int32
+              example: 1
+            items:
+              type: integer
+              format: int32
+              example: 1
+            urls:
+              type: object
+              properties: {}
+        listings:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+                example: 41578240
+              status:
+                type: string
+                example: For Sale
+              resource_url:
+                type: string
+                example: http://api.discogs.com/marketplace/listings/41578240
+              posted:
+                type: string
+                format: date-time
+                example: 2011-10-19T10:40:26
+              ships_from:
+                type: string
+                example: United States
+              comments:
+                type: string
+                example: Like used!
+              condition:
+                type: string
+                example: Poor (P)
+              sleeve_condition:
+                type: string
+                example: Poor (P)
+              audio:
+                type: boolean
+                example: true
+              allow_offers:
+                type: boolean
+                example: true
+              weight:
+                type: integer
+                format: int32
+                example: 239
+              format_quantity:
+                type: integer
+                format: int32
+                example: 2
+              external_id:
+                type: string
+                example: "shelf 32a, #5"
+              seller:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    example: test
+                  id:
+                    type: integer
+                    format: int32
+                    example: 1
+              price:
+                type: object
+                properties:
+                  currency:
+                    type: string
+                    example: USD
+                  value:
+                    type: integer
+                    format: int32
+                    example: 23
+              release:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    example: 810756
+                  resource_url:
+                    type: string
+                    example: http://api.discogs.com/releases/810756
+                  description:
+                    type: string
+                    example: AC/DC - Back In Black (LP, Album)
+                  catalog_number:
+                    type: string
+                    example: ATL 50735
+                  year:
+                    type: integer
+                    format: int32
+                    example: 1980
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        username:
+          type: string
+          example: abuntine
+        name:
+          type: string
+          example: Example Sampleman
+        email:
+          type: string
+          example: sampleman@example.com
+        resource_url:
+          type: string
+          example: http://api.discogs.com/users/example
+        inventory_url:
+          type: string
+          example: http://api.discogs.com/users/example/inventory
+        collection_folders_url:
+          type: string
+          example: http://api.discogs.com/users/example/collection/folders
+        collection_fields_url:
+          type: string
+          example: http://api.discogs.com/users/example/collection/fields
+        wantlist_url:
+          type: string
+          example: http://api.discogs.com/users/example/wants
+        uri:
+          type: string
+          example: http://www.discogs.com/user/example
+        profile:
+          type: string
+          example: This is a new profile
+        home_page:
+          type: string
+          example: http://www.example.com
+        location:
+          type: string
+          example: Australia
+        registered:
+          type: string
+          format: date-time
+          example: 2011-08-30 14:21:45
+        num_lists:
+          type: integer
+          format: int32
+          example: 0
+        num_for_sale:
+          type: integer
+          format: int32
+          example: 6
+        num_collection:
+          type: integer
+          format: int32
+          example: 4
+        num_wantlist:
+          type: integer
+          format: int32
+          example: 5
+        num_pending:
+          type: integer
+          format: int32
+          example: 10
+        releases_contributed:
+          type: integer
+          format: int32
+          example: 15
+        rank:
+          type: integer
+          format: int32
+          example: 30
+        releases_rated:
+          type: integer
+          format: int32
+          example: 4
+        rating_avg:
+          type: number
+          example: 2.5
+    UserWantlist:
+      type: object
+      properties:
+        wants:
+          type: array
+          items:
+            type: object
+            properties:
+              rating:
+                type: integer
+                format: int32
+                example: 0
+              resource_url:
+                type: string
+                example: http://api.discogs.com/users/abuntine/wants/2360509
+              basic_information:
+                type: object
+                properties:
+                  labels:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int32
+                          example: 6621
+                        resource_url:
+                          type: string
+                          example: http://api.discogs.com/labels/6621
+                        catno:
+                          type: string
+                          example: 4 56 577
+                        name:
+                          type: string
+                          example: AMIGA
+                        entity_type:
+                          type: string
+                          example: "1"
+                  formats:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        descriptions:
+                          type: array
+                          items:
+                            type: string
+                            example: 7"
+                        name:
+                          type: string
+                          example: Vinyl
+                        qty:
+                          type: string
+                          example: "1"
+                  thumb:
+                    type: string
+                    example: http://api.discogs.com/image/R-150-2360509-1279466424.jpeg
+                  title:
+                    type: string
+                    example: 18 Jahre Sein / Mach Keine Wellen
+                  artists:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        join:
+                          type: string
+                          example: ""
+                        name:
+                          type: string
+                          example: Formel 1 (2)
+                        anv:
+                          type: string
+                          example: ""
+                        tracks:
+                          type: string
+                          example: ""
+                        role:
+                          type: string
+                          example: ""
+                        resource_url:
+                          type: string
+                          example: http://api.discogs.com/artists/961630
+                        id:
+                          type: integer
+                          format: int32
+                          example: 961630
+                  resource_url:
+                    type: string
+                    example: http://api.discogs.com/releases/2360509
+                  year:
+                    type: integer
+                    format: int32
+                    example: 1985
+                  id:
+                    type: integer
+                    format: int32
+                    example: 2360509
+              id:
+                type: integer
+                format: int32
+                example: 2360509
+              notes_public:
+                type: boolean
+                example: false
+        pagination:
+          type: object
+          properties:
+            per_page:
+              type: integer
+              format: int32
+              example: 5
+            items:
+              type: integer
+              format: int32
+              example: 77
+            page:
+              type: integer
+              format: int32
+              example: 1
+            urls:
+              type: object
+              properties:
+                last:
+                  type: string
+                  example: http://api.discogs.com/users/abuntine/wants?per_page=5&page=16
+                next:
+                  type: string
+                  example: http://api.discogs.com/users/abuntine/wants?per_page=5&page=2
+            pages:
+              type: integer
+              format: int32
+              example: 16
+    WantlistRelease:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        rating:
+          type: integer
+          format: int32
+          example: 0
+        notes:
+          type: string
+          example: This is a note
+        resource_url:
+          type: string
+          example: http://api.discogs.com/users/example/wants/1
+        basic_information:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+              example: 1
+            resource_url:
+              type: string
+              example: http://api.discogs.com/releases/1
+            thumb:
+              type: string
+              example: http://api.discogs.com/image/R-150-1-1193812031.jpeg
+            title:
+              type: string
+              example: Stockholm
+            year:
+              type: integer
+              format: int32
+              example: 1999
+            formats:
+              type: array
+              items:
+                type: object
+                properties:
+                  qty:
+                    type: string
+                    example: "2"
+                  descriptions:
+                    type: array
+                    items:
+                      type: string
+                      example: 12"
+                  name:
+                    type: string
+                    example: Vinyl
+            labels:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Svek
+                  entity_type:
+                    type: string
+                    example: "1"
+                  catno:
+                    type: string
+                    example: SK032
+                  resource_url:
+                    type: string
+                    example: http://api.discogs.com/labels/5
+                  id:
+                    type: integer
+                    format: int32
+                    example: 5
+                  entity_type_name:
+                    type: string
+                    example: Label
+            artists:
+              type: array
+              items:
+                type: object
+                properties:
+                  join:
+                    type: string
+                    example: ""
+                  name:
+                    type: string
+                    example: Persuader, The
+                  anv:
+                    type: string
+                    example: ""
+                  tracks:
+                    type: string
+                    example: ""
+                  role:
+                    type: string
+                    example: ""
+                  resource_url:
+                    type: string
+                    example: http://api.discogs.com/artists/1
+                  id:
+                    type: integer
+                    format: int32
+                    example: 1
+  securitySchemes:
+    DiscogsAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: 'Prefix the value with \"Discogs\" to indicate the custom authorization type' 

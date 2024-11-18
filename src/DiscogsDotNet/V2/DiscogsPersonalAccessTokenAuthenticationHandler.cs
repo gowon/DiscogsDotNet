@@ -1,11 +1,11 @@
 ﻿namespace DiscogsDotNet.V2;
 using System.Net.Http.Headers;
 
-public class DiscogsAuthenticationHandler : DelegatingHandler
+public class DiscogsPersonalAccessTokenAuthenticationHandler : DelegatingHandler
 {
     private readonly DiscogsClientV2Options _options;
 
-    public DiscogsAuthenticationHandler(DiscogsClientV2Options options)
+    public DiscogsPersonalAccessTokenAuthenticationHandler(DiscogsClientV2Options options)
     {
         _options = options;
     }

@@ -54,7 +54,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Request Token
+        /// Get Request Token
         /// </summary>
         /// <remarks>
         /// Generate the request token.
@@ -63,7 +63,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Request_tokenAsync(string authorization = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetRequestTokenAsync(string authorization = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -142,7 +142,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Access Token
+        /// Get Access Token
         /// </summary>
         /// <remarks>
         /// Generate the access token.
@@ -151,7 +151,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Access_tokenAsync(string body = null, string authorization = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetAccessTokenAsync(string body = null, string authorization = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -234,7 +234,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Releases
+        /// Get Releases
         /// </summary>
         /// <remarks>
         /// The Release resource represents a particular physical or digital object released by one or more Artists.
@@ -243,7 +243,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ReleasesGETAsync(string release_id, string content_Type = null, string user_Agent = null, string curr_abbr = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Release> GetReleasesAsync(string release_id, string curr_abbr = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (release_id == null)
                 throw new System.ArgumentNullException("release_id");
@@ -254,12 +254,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -300,7 +294,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Release>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -329,7 +323,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Release rating by user
+        /// Get Release rating by user
         /// </summary>
         /// <remarks>
         /// Retrieves the release's rating for a given user.
@@ -338,7 +332,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> RatingGETAsync(string release_id, string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetReleaseRatingByUserAsync(string release_id, string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (release_id == null)
                 throw new System.ArgumentNullException("release_id");
@@ -352,12 +346,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -423,7 +411,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Release rating by user
+        /// Update Release rating by user
         /// </summary>
         /// <remarks>
         /// Updates the release's rating for a given user. Authentication as the user is required. 
@@ -434,7 +422,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> RatingPUTAsync(string release_id, string username, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> UpdateReleaseRatingByUserAsync(string release_id, string username, string body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (release_id == null)
                 throw new System.ArgumentNullException("release_id");
@@ -448,12 +436,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("*/*");
@@ -523,7 +505,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Release rating by user
+        /// Delete Release rating by user
         /// </summary>
         /// <remarks>
         /// Deletes the release's rating for a given user. Authentication as the user is required.
@@ -532,7 +514,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> RatingDELETEAsync(string release_id, string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> DeleteReleaseRatingByUserAsync(string release_id, string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (release_id == null)
                 throw new System.ArgumentNullException("release_id");
@@ -546,12 +528,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -617,7 +593,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Community release rating
+        /// Get Community release rating
         /// </summary>
         /// <remarks>
         /// The Community Release Rating endpoint retrieves the average rating and the total number of user ratings for a given release.
@@ -626,7 +602,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> RatingGET2Async(string release_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetCommunityReleaseRatingAsync(string release_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (release_id == null)
                 throw new System.ArgumentNullException("release_id");
@@ -637,12 +613,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -707,7 +677,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Master release
+        /// Get Master release
         /// </summary>
         /// <remarks>
         /// The Master resource represents a set of similar Releases. Masters (also known as “master releases”) have a “main release” which is often the chronologically earliest.
@@ -716,7 +686,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> MastersAsync(string master_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetMasterReleaseAsync(string master_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (master_id == null)
                 throw new System.ArgumentNullException("master_id");
@@ -727,12 +697,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -796,7 +760,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Master release versions
+        /// Get Master release versions
         /// </summary>
         /// <remarks>
         /// Retrieves a list of all Releases that are versions of this master. Accepts Pagination parameters.
@@ -805,7 +769,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> VersionsAsync(string master_id, string content_Type = null, string user_Agent = null, string page = null, string per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetMasterReleaseVersionsAsync(string master_id, string page = null, string per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (master_id == null)
                 throw new System.ArgumentNullException("master_id");
@@ -816,12 +780,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -896,7 +854,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Artist
+        /// Get Artist
         /// </summary>
         /// <remarks>
         /// Get an artist
@@ -905,7 +863,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ArtistsAsync(string artist_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetArtistAsync(string artist_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (artist_id == null)
                 throw new System.ArgumentNullException("artist_id");
@@ -916,12 +874,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -985,7 +937,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Artist releases
+        /// Get Artist releases
         /// </summary>
         /// <remarks>
         /// Returns a list of Releases and Masters associated with the Artist. Accepts Pagination.
@@ -994,27 +946,26 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ReleasesGET2Async(string content_Type = null, string user_Agent = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetArtistReleasesAsync(string artist_id, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
+            if (artist_id == null)
+                throw new System.ArgumentNullException("artist_id");
+
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "artists/21262/releases"
-                    urlBuilder_.Append("artists/21262/releases");
+                    // Operation Path: "artists/{artist_id}/releases"
+                    urlBuilder_.Append("artists/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(artist_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/releases");
                     urlBuilder_.Append('?');
                     if (sort != null)
                     {
@@ -1080,7 +1031,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Label
+        /// Get Label
         /// </summary>
         /// <remarks>
         /// Get a label
@@ -1089,7 +1040,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> LabelsAsync(string label_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetLabelAsync(string label_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (label_id == null)
                 throw new System.ArgumentNullException("label_id");
@@ -1100,12 +1051,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -1169,7 +1114,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// All label releases
+        /// Get All label releases
         /// </summary>
         /// <remarks>
         /// Returns a list of Releases associated with the label. Accepts Pagination parameters.
@@ -1178,7 +1123,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ReleasesGET3Async(string label_id, string content_Type = null, string user_Agent = null, string page = null, string per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetAllLabelReleasesAsync(string label_id, string page = null, string per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (label_id == null)
                 throw new System.ArgumentNullException("label_id");
@@ -1189,12 +1134,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -1269,7 +1208,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Search
+        /// Get Search
         /// </summary>
         /// <remarks>
         /// Issue a search query to our database. This endpoint accepts pagination parameters. Authentication (as any user) is required.
@@ -1278,7 +1217,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> SearchAsync(string content_Type = null, string user_Agent = null, string query = null, string type = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetSearchAsync(string query = null, string type = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1286,12 +1225,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -1364,7 +1297,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Inventory
+        /// Get Inventory
         /// </summary>
         /// <remarks>
         /// Returns the list of listings in a user's inventory. Accepts Pagination parameters.
@@ -1378,7 +1311,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> InventoryAsync(string username, string content_Type = null, string user_Agent = null, string @string = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetInventoryAsync(string username, string @string = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -1389,12 +1322,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -1473,7 +1400,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Listing
+        /// Get Listing
         /// </summary>
         /// <remarks>
         /// View the data associated with a listing.
@@ -1483,7 +1410,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ListingsGETAsync(string listing_id, string content_Type = null, string user_Agent = null, string curr_abbr = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetListingAsync(string listing_id, string curr_abbr = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (listing_id == null)
                 throw new System.ArgumentNullException("listing_id");
@@ -1494,12 +1421,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -1569,7 +1490,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Listing
+        /// Create Listing
         /// </summary>
         /// <remarks>
         /// Edit the data associated with a listing.
@@ -1610,7 +1531,7 @@ namespace DiscogsDotNet.V2
         /// <param name="format_quantity">The number of items this listing counts as, for the purpose of calculating shipping. This field is called “Counts As” on the Discogs website. Set this field to auto to have the quantity automatically estimated for you.</param>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ListingsPOSTAsync(string listing_id, object body = null, string content_Type = null, string user_Agent = null, string release_id = null, string condition = null, string sleeve_condition = null, string price = null, string comments = null, string allow_offers = null, string status = null, string external_id = null, string location = null, string weight = null, string format_quantity = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> CreateListingAsync(string listing_id, object body = null, string release_id = null, string condition = null, string sleeve_condition = null, string price = null, string comments = null, string allow_offers = null, string status = null, string external_id = null, string location = null, string weight = null, string format_quantity = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (listing_id == null)
                 throw new System.ArgumentNullException("listing_id");
@@ -1621,12 +1542,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
@@ -1740,7 +1655,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Listing
+        /// Delete Listing
         /// </summary>
         /// <remarks>
         /// Permanently remove a listing from the Marketplace. Authentication as the listing owner is required.
@@ -1749,7 +1664,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ListingsDELETEAsync(string listing_id, string content_Type = null, string user_Agent = null, string curr_abbr = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> DeleteListingAsync(string listing_id, string curr_abbr = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (listing_id == null)
                 throw new System.ArgumentNullException("listing_id");
@@ -1760,12 +1675,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -1835,7 +1744,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// New listing
+        /// Create New listing
         /// </summary>
         /// <remarks>
         /// Create a Marketplace listing. Authentication is required; the listing will be added to the authenticated user's Inventory.
@@ -1872,7 +1781,7 @@ namespace DiscogsDotNet.V2
         /// <param name="format_quantity">The number of items this listing counts as, for the purpose of calculating shipping. This field is called “Counts As” on the Discogs website. Set this field to auto to have the quantity automatically estimated for you.</param>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ListingsPOST2Async(object body = null, string content_Type = null, string user_Agent = null, string release_id = null, string condition = null, string sleeve_condition = null, string price = null, string comments = null, string allow_offers = null, string status = null, string external_id = null, string location = null, string weight = null, string format_quantity = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> CreateNewListingAsync(object body = null, string release_id = null, string condition = null, string sleeve_condition = null, string price = null, string comments = null, string allow_offers = null, string status = null, string external_id = null, string location = null, string weight = null, string format_quantity = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1880,12 +1789,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
@@ -1998,7 +1901,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Order
+        /// Get Order
         /// </summary>
         /// <remarks>
         /// View the data associated with a listing.
@@ -2008,7 +1911,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> OrdersGETAsync(string order_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetOrderAsync(string order_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (order_id == null)
                 throw new System.ArgumentNullException("order_id");
@@ -2019,12 +1922,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -2088,7 +1985,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Order
+        /// Create Order
         /// </summary>
         /// <remarks>
         /// dit the data associated with an order.
@@ -2120,7 +2017,7 @@ namespace DiscogsDotNet.V2
         /// <param name="shipping">The order shipping amount. As a side-effect of setting this value, the buyer is invoiced and the order status is set to Invoice Sent.</param>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> OrdersPOSTAsync(string order_id, object body = null, string content_Type = null, string user_Agent = null, string status = null, string shipping = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> CreateOrderAsync(string order_id, object body = null, string status = null, string shipping = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (order_id == null)
                 throw new System.ArgumentNullException("order_id");
@@ -2131,12 +2028,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
@@ -2214,7 +2105,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// List orders
+        /// Get List orders
         /// </summary>
         /// <remarks>
         /// Returns a list of the authenticated user's orders. Accepts Pagination parameters.
@@ -2245,7 +2136,7 @@ namespace DiscogsDotNet.V2
         /// <param name="sort_order">Sort items in a particular order (one of asc, desc)</param>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> OrdersGET2Async(string content_Type = null, string user_Agent = null, string status = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetListOrdersAsync(string status = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2253,12 +2144,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -2335,7 +2220,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// List order messages
+        /// Get List order messages
         /// </summary>
         /// <remarks>
         /// Returns a list of the order's messages with the most recent first. Accepts Pagination parameters.
@@ -2345,7 +2230,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> MessagesGETAsync(string order_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetListOrderMessagesAsync(string order_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (order_id == null)
                 throw new System.ArgumentNullException("order_id");
@@ -2356,12 +2241,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -2426,7 +2305,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// List order messages
+        /// Create List order messages
         /// </summary>
         /// <remarks>
         /// Adds a new message to the order's message log.
@@ -2439,7 +2318,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> MessagesPOSTAsync(string order_id, object body = null, string content_Type = null, string user_Agent = null, string message = null, string status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> CreateListOrderMessagesAsync(string order_id, object body = null, string message = null, string status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (order_id == null)
                 throw new System.ArgumentNullException("order_id");
@@ -2450,12 +2329,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
@@ -2534,7 +2407,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Fee
+        /// Get Fee
         /// </summary>
         /// <remarks>
         /// The Fee resource allows you to quickly calculate the fee for selling an item on the Marketplace.
@@ -2544,7 +2417,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> FeeAsync(string price, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetFeeAsync(string price, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (price == null)
                 throw new System.ArgumentNullException("price");
@@ -2555,12 +2428,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -2624,7 +2491,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Fee with currency
+        /// Get Fee with currency
         /// </summary>
         /// <remarks>
         /// The Fee resource allows you to quickly calculate the fee for selling an item on the Marketplace given a particular currency.
@@ -2633,7 +2500,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Fee2Async(string price, string currency, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetFeeWithCurrencyAsync(string price, string currency, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (price == null)
                 throw new System.ArgumentNullException("price");
@@ -2647,12 +2514,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -2718,7 +2579,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Price suggestions
+        /// Get Price suggestions
         /// </summary>
         /// <remarks>
         /// Retrieve price suggestions for the provided Release ID. If no suggestions are available, an empty object will be returned.
@@ -2728,7 +2589,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Price_suggestionsAsync(string release_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetPriceSuggestionsAsync(string release_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (release_id == null)
                 throw new System.ArgumentNullException("release_id");
@@ -2739,12 +2600,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -2817,7 +2672,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ExportPOSTAsync(string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> ExportYourInventoryAsync(string body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2825,12 +2680,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("*/*");
@@ -2897,7 +2746,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Recent exports
+        /// Get Recent exports
         /// </summary>
         /// <remarks>
         /// Get a list of all recent exports of your inventory. Accepts Pagination parameters.
@@ -2906,7 +2755,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ExportGETAsync(string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetRecentExportsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2914,12 +2763,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -2991,7 +2834,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ExportGET2Async(string id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetAnExportAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -3002,12 +2845,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -3080,7 +2917,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> DownloadAsync(string id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> DownloadAnExportAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -3091,12 +2928,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -3170,7 +3001,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> AddAsync(string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> AddInventoryAsync(string body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -3178,12 +3009,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("*/*");
@@ -3259,7 +3084,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ChangeAsync(string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> DeleteInventoryAsync(string body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -3267,12 +3092,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("*/*");
@@ -3339,7 +3158,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Recent uploads
+        /// Get Recent uploads
         /// </summary>
         /// <remarks>
         /// Get a list of all recent inventory uploads. Accepts Pagination parameters.
@@ -3348,7 +3167,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> UploadAsync(string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetRecentUploadsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -3356,12 +3175,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -3424,7 +3237,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Recent upload by ID
+        /// Get Recent upload by ID
         /// </summary>
         /// <remarks>
         /// Get details about the status of an inventory upload.
@@ -3433,7 +3246,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Upload2Async(string id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetRecentUploadByIdAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -3444,12 +3257,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -3513,7 +3320,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Identity
+        /// Get Identity
         /// </summary>
         /// <remarks>
         /// Retrieve basic information about the authenticated user.
@@ -3524,7 +3331,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> IdentityAsync(string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetIdentityAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -3532,12 +3339,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -3600,7 +3401,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Profile
+        /// Get Profile
         /// </summary>
         /// <remarks>
         /// Retrieve a user by username.
@@ -3613,7 +3414,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> UsersGETAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetProfileAsync(string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -3624,12 +3425,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -3693,7 +3488,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Profile
+        /// Update Profile
         /// </summary>
         /// <remarks>
         /// Edit a user's profile data. Authentication as the user is required. Parameters must be filled in a json object inside the body. 
@@ -3702,7 +3497,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> UsersPOSTAsync(string username, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> UpdateProfileAsync(string username, string body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -3713,12 +3508,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("*/*");
@@ -3786,7 +3575,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// User submissions
+        /// Get User submissions
         /// </summary>
         /// <remarks>
         /// Retrieve a user's submissions by username. Accepts Pagination parameters.
@@ -3795,7 +3584,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> SubmissionsAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetUserSubmissionsAsync(string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -3806,12 +3595,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -3876,7 +3659,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// User contributions
+        /// Get User contributions
         /// </summary>
         /// <remarks>
         /// Retrieve a user's contributions by username. Accepts Pagination parameters. The Contributions resource represents releases, labels, and artists submitted by a user. 
@@ -3885,7 +3668,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ContributionsAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetUserContributionsAsync(string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -3896,12 +3679,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -3966,7 +3743,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Collection
+        /// Get Collection
         /// </summary>
         /// <remarks>
         /// Retrieve a list of folders in a user's collection. If the collection has been made private by its owner, authentication as the collection owner is required. If you are not authenticated as the collection owner, only folder ID 0 (the “All” folder) will be visible (if the requested user's collection is public).
@@ -3975,7 +3752,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> FoldersGETAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetCollectionAsync(string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -3986,12 +3763,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -4056,7 +3827,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Collection
+        /// Create Collection
         /// </summary>
         /// <remarks>
         /// Retrieve a list of folders in a user's collection. If the collection has been made private by its owner, authentication as the collection owner is required. If you are not authenticated as the collection owner, only folder ID 0 (the “All” folder) will be visible (if the requested user's collection is public).
@@ -4065,7 +3836,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> FoldersPOSTAsync(string username, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> CreateCollectionAsync(string username, string body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -4076,12 +3847,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("*/*");
@@ -4163,7 +3928,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> FoldersGET2Async(string username, string folder_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> ListCustomFieldsAsync(string username, string folder_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -4177,12 +3942,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -4248,7 +4007,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Collection folder
+        /// Create Collection folder
         /// </summary>
         /// <remarks>
         /// Edit a folder's metadata. Folders 0 and 1 cannot be renamed. Authentication as the collection owner is required.
@@ -4257,7 +4016,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> FoldersPOST2Async(string username, string folder_id, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> CreateCollectionFolderAsync(string username, string folder_id, string body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -4271,12 +4030,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("*/*");
@@ -4346,7 +4099,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Collection folder
+        /// Delete Collection folder
         /// </summary>
         /// <remarks>
         /// Delete a folder from a user's collection. A folder must be empty before it can be deleted. Authentication as the collection owner is required.
@@ -4355,7 +4108,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> FoldersDELETEAsync(string username, string folder_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> DeleteCollectionFolderAsync(string username, string folder_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -4369,12 +4122,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -4440,7 +4187,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Collection items by release
+        /// Get Collection items by release
         /// </summary>
         /// <remarks>
         /// View the user's collection folders which contain a specified release. This will also show information about each release instance. The release_id must be non-zero.
@@ -4451,7 +4198,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ReleasesGET4Async(string username, string release_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetCollectionItemsByReleaseAsync(string username, string release_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -4465,12 +4212,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -4536,7 +4277,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Collection items by folder
+        /// Get Collection items by folder
         /// </summary>
         /// <remarks>
         /// Returns the list of item in a folder in a user's collection. Accepts Pagination parameters.
@@ -4561,7 +4302,7 @@ namespace DiscogsDotNet.V2
         /// <param name="sort_order">Sort items in a particular order (asc or desc)</param>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ReleasesGET5Async(string username, string folder_id, string content_Type = null, string user_Agent = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetCollectionItemsByFolderAsync(string username, string folder_id, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -4575,12 +4316,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -4670,7 +4405,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ReleasesPOSTAsync(string username, string folder_id, string release_id, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> AddToCollectionFolderAsync(string username, string folder_id, string release_id, string body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -4687,12 +4422,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("*/*");
@@ -4777,7 +4506,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> InstancesPOSTAsync(string username, string folder_id, string release_id, string instance_id, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> ChangeRatingOfReleaseAsync(string username, string folder_id, string release_id, string instance_id, string body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -4797,12 +4526,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("*/*");
@@ -4889,7 +4612,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> InstancesDELETEAsync(string username, string folder_id, string release_id, string instance_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> DeleteInstanceFromFolderAsync(string username, string folder_id, string release_id, string instance_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -4909,12 +4632,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -4993,7 +4710,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> FieldsAsync(string username, string folder_id, string release_id, string instance_id, string field_id, string body = null, string content_Type = null, string user_Agent = null, string value = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> EditFieldsInstanceAsync(string username, string folder_id, string release_id, string instance_id, string field_id, string body = null, string value = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -5016,12 +4733,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("*/*");
@@ -5031,7 +4742,7 @@ namespace DiscogsDotNet.V2
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "users/{username}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}/fields/{field_id}{"
+                    // Operation Path: "users/{username}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}/fields/{field_id}"
                     urlBuilder_.Append("users/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(username, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append("/collection/folders/");
@@ -5114,7 +4825,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ValueAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> CollectionValueAsync(string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -5125,12 +4836,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -5195,7 +4900,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Wantlist
+        /// Get Wantlist
         /// </summary>
         /// <remarks>
         /// Returns the list of releases in a user's wantlist. Accepts Pagination parameters.
@@ -5210,7 +4915,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> WantsGETAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetWantlistAsync(string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -5221,12 +4926,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -5302,7 +5001,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> WantsPOSTAsync(string username, string release_id, string body = null, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> AddToWantlistAsync(string username, string release_id, string body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -5316,12 +5015,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("*/*");
@@ -5402,7 +5095,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> WantsDELETEAsync(string username, string release_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> DeleteReleaseFromWantlistAsync(string username, string release_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -5416,12 +5109,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -5487,7 +5174,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// User Lists
+        /// Get User Lists
         /// </summary>
         /// <remarks>
         /// Returns a User's Lists. Private Lists will only display when authenticated as the owner. Accepts Pagination parameters.
@@ -5496,7 +5183,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> ListsAsync(string username, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetUserListsAsync(string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -5507,12 +5194,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -5577,7 +5258,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// List
+        /// Get List
         /// </summary>
         /// <remarks>
         /// Returns items from a specified List. Private Lists will only display when authenticated as the owner.
@@ -5586,7 +5267,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Lists2Async(string list_id, string content_Type = null, string user_Agent = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> GetListAsync(string list_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (list_id == null)
                 throw new System.ArgumentNullException("list_id");
@@ -5597,12 +5278,6 @@ namespace DiscogsDotNet.V2
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-
-                    if (content_Type != null)
-                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (user_Agent != null)
-                        request_.Headers.TryAddWithoutValidation("User-Agent", ConvertToString(user_Agent, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
