@@ -6,5 +6,4 @@ public static class MediaTypes
     public const string Discogs = "application/vnd.discogs.v2.discogs+json";
     public const string PlainText = "application/vnd.discogs.v2.plaintext+json";
     public const string Html = "application/vnd.discogs.v2.html+json";
-
 }

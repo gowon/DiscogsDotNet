@@ -53,3 +53,4 @@ References:
 2. Get all (paged) releases in collection <https://www.discogs.com/developers?srsltid=AfmBOoo1A54MFg0JLNBIXLaH_hCZhixUdiI_jzJDLUxltTZBBk292hkW#page:user-collection,header:user-collection-collection-items-by-folder>. (folder_id =1, per_page=100)
 3. For each release (id, resource_url, artists:0:name, basic_information:title, year):
    1. Get Price Suggestion <https://www.discogs.com/developers?srsltid=AfmBOoo1A54MFg0JLNBIXLaH_hCZhixUdiI_jzJDLUxltTZBBk292hkW#page:marketplace,header:marketplace-price-suggestions>
+4. Export to Excel/CSV <https://github.com/mini-software/MiniExcel?tab=readme-ov-file#1-anonymous-or-strongly-type-try-it>

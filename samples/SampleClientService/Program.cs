@@ -53,6 +53,7 @@ public class Program
                 .AddHttpMessageHandler<DiscogsPersonalAccessTokenAuthenticationHandler>()
                 .AddStandardResilienceHandler();
 
+            builder.Services.AddOptions<WorkerOptions>().AutoBind();
             builder.Services.AddHostedService<Worker>();
 
             var host = builder.Build();

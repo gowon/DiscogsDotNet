@@ -198,7 +198,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/UserRating"
     put:
       tags:
         - Database
@@ -237,7 +237,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/UserRating"
     delete:
       tags:
         - Database
@@ -263,10 +263,6 @@ paths:
       responses:
         '200':
           description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
   /releases/{release_id}/rating:
     get:
       tags:
@@ -291,7 +287,32 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/CommunityRating"
+  /releases/{release_id}/stats:
+    get:
+      tags:
+        - Database
+      summary: Get Release Stats
+      operationId: getReleaseStats
+      description: >-
+        The Release Stats endpoint retrieves the total number of “haves” (in the
+        community’s collections) and “wants” (in the community’s wantlists) for a given release.
+
+
+        [https://www.discogs.com/developers/#page:database,header:database-release-stats](https://www.discogs.com/developers/#page:database,header:database-release-stats)
+      parameters:
+        - name: release_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReleaseStats"
   /masters/{master_id}:
     get:
       tags:
@@ -317,7 +338,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/MasterRelease"
   /masters/{master_id}/versions:
     get:
       tags:
@@ -352,7 +373,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/MasterReleaseVersions"
   /artists/{artist_id}:
     get:
       tags:
@@ -376,7 +397,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/Artist"
   /artists/{artist_id}/releases:
     get:
       tags:
@@ -411,7 +432,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/ArtistReleases"
   /labels/{label_id}:
     get:
       tags:
@@ -435,7 +456,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/Label"
   /labels/{label_id}/releases:
     get:
       tags:
@@ -470,7 +491,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/LabelReleases"
   /database/search:
     get:
       tags:
@@ -500,7 +521,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/SearchResults"
   /users/{username}/inventory:
     get:
       tags:
@@ -554,7 +575,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/UserInventory"
   /marketplace/listings/{listing_id}:
     get:
       tags:
@@ -588,12 +609,12 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/Listing"
     post:
       tags:
         - Marketplace
-      summary: Create Listing
-      operationId: createListing
+      summary: Edit Listing
+      operationId: editListing
       description: >-
         Edit the data associated with a listing.
 
@@ -742,12 +763,8 @@ paths:
             type: string
           required: true
       responses:
-        '200':
+        '204':
           description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
     delete:
       tags:
         - Marketplace
@@ -771,12 +788,8 @@ paths:
             type: string
           required: true
       responses:
-        '200':
+        '204':
           description: Successful response
-          content:
-            application/json:
-              schema:
-                type: object
   /marketplace/listings:
     post:
       tags:
@@ -925,6 +938,11 @@ paths:
             application/json:
               schema:
                 type: object
+                properties: 
+                  listing_id: 
+                    type: number
+                  resource_url: 
+                    type: string
   /marketplace/orders/{order_id}:
     get:
       tags:
@@ -953,14 +971,14 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/Order"
     post:
       tags:
         - Marketplace
-      summary: Create Order
-      operationId: createOrder
+      summary: Edit Order
+      operationId: editOrder
       description: >-
-        dit the data associated with an order.
+        Edit the data associated with an order.
 
         Authentication as the seller is required.
 
@@ -1045,7 +1063,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/Order"
   /marketplace/orders:
     get:
       tags:
@@ -1105,13 +1123,13 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/Orders"
   /marketplace/orders/{order_id}/messages:
     get:
       tags:
         - Marketplace
-      summary: Get List order messages
-      operationId: getListOrderMessages
+      summary: List order messages
+      operationId: listOrderMessages
       description: >-
         Returns a list of the order's messages with the most recent first.
         Accepts Pagination parameters.
@@ -1132,12 +1150,12 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/OrderMessages"
     post:
       tags:
         - Marketplace
-      summary: Create List order messages
-      operationId: createListOrderMessages
+      summary: Create new order message
+      operationId: createNewOrderMessages
       description: >-
         Adds a new message to the order's message log.
 
@@ -1176,6 +1194,28 @@ paths:
             application/json:
               schema:
                 type: object
+                properties: 
+                  from: 
+                    type: object
+                    properties: 
+                      username: 
+                        type: string
+                      resource_url: 
+                        type: string
+                  message: 
+                    type: string
+                  order: 
+                    type: object
+                    properties: 
+                      resource_url: 
+                        type: string
+                      id: 
+                        type: string
+                  timestamp: 
+                    type: string
+                    format: date-time
+                  subject: 
+                    type: string
   /marketplace/fee/{price}:
     get:
       tags:
@@ -1202,7 +1242,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/Fee"
   /marketplace/fee/{price}/{currency}:
     get:
       tags:
@@ -1232,7 +1272,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/Fee"
   /marketplace/price_suggestions/{release_id}:
     get:
       tags:
@@ -1261,7 +1301,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/PriceSuggestions"
   /inventory/export:
     post:
       tags:
@@ -1499,7 +1539,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/User"
     post:
       tags:
         - User identity
@@ -1805,6 +1845,8 @@ paths:
 
         [https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-items-by-folder](https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-items-by-folder)
       parameters:
+        - $ref: "#/components/parameters/pageParam"
+        - $ref: "#/components/parameters/perPageParam"
         - name: sort
           in: query
           schema:
@@ -1833,7 +1875,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/UserCollection"
   /users/{username}/collection/folders/{folder_id}/releases/{release_id}:
     post:
       tags:
@@ -2061,7 +2103,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/UserCollectionValue"
   /users/{username}/wants:
     get:
       tags:
@@ -2331,27 +2373,7 @@ components:
       type: object
       properties:
         pagination:
-          type: object
-          properties:
-            per_page:
-              type: integer
-              format: int32
-              example: 50
-            items:
-              type: integer
-              format: int32
-              example: 37
-            page:
-              type: integer
-              format: int32
-              example: 1
-            urls:
-              type: object
-              properties: {}
-            pages:
-              type: integer
-              format: int32
-              example: 1
+          $ref: "#/components/schemas/Pagination"
         releases:
           type: array
           items:
@@ -2614,27 +2636,7 @@ components:
       type: object
       properties:
         pagination:
-          type: object
-          properties:
-            per_page:
-              type: integer
-              format: int32
-              example: 50
-            items:
-              type: integer
-              format: int32
-              example: 8
-            page:
-              type: integer
-              format: int32
-              example: 1
-            urls:
-              type: object
-              properties: {}
-            pages:
-              type: integer
-              format: int32
-              example: 1
+          $ref: "#/components/schemas/Pagination"
         releases:
           type: array
           items:
@@ -2913,27 +2915,7 @@ components:
       type: object
       properties:
         pagination:
-          type: object
-          properties:
-            per_page:
-              type: integer
-              format: int32
-              example: 50
-            items:
-              type: integer
-              format: int32
-              example: 3
-            page:
-              type: integer
-              format: int32
-              example: 1
-            urls:
-              type: object
-              properties: {}
-            pages:
-              type: integer
-              format: int32
-              example: 1
+          $ref: "#/components/schemas/Pagination"
         versions:
           type: array
           items:
@@ -3103,27 +3085,7 @@ components:
       type: object
       properties:
         pagination:
-          type: object
-          properties:
-            per_page:
-              type: integer
-              format: int32
-              example: 50
-            pages:
-              type: integer
-              format: int32
-              example: 1
-            page:
-              type: integer
-              format: int32
-              example: 1
-            items:
-              type: integer
-              format: int32
-              example: 1
-            urls:
-              type: object
-              properties: {}
+          $ref: "#/components/schemas/Pagination"
         orders:
           type: array
           items:
@@ -3258,27 +3220,7 @@ components:
       type: object
       properties:
         pagination:
-          type: object
-          properties:
-            per_page:
-              type: integer
-              format: int32
-              example: 50
-            pages:
-              type: integer
-              format: int32
-              example: 1
-            page:
-              type: integer
-              format: int32
-              example: 1
-            urls:
-              type: object
-              properties: {}
-            items:
-              type: integer
-              format: int32
-              example: 7
+          $ref: "#/components/schemas/Pagination"
         messages:
           type: array
           items:
@@ -3704,27 +3646,7 @@ components:
       type: object
       properties:
         pagination:
-          type: object
-          properties:
-            per_page:
-              type: integer
-              format: int32
-              example: 50
-            items:
-              type: integer
-              format: int32
-              example: 4
-            page:
-              type: integer
-              format: int32
-              example: 1
-            urls:
-              type: object
-              properties: {}
-            pages:
-              type: integer
-              format: int32
-              example: 1
+          $ref: "#/components/schemas/Pagination"
         results:
           type: array
           items:
@@ -3862,33 +3784,7 @@ components:
       type: object
       properties:
         pagination:
-          type: object
-          properties:
-            per_page:
-              type: integer
-              format: int32
-              example: 5
-            items:
-              type: integer
-              format: int32
-              example: 309
-            page:
-              type: integer
-              format: int32
-              example: 1
-            urls:
-              type: object
-              properties:
-                last:
-                  type: string
-                  example: http://api.discogs.com/users/abuntine/collection/folders/0/releases?per_page=5&page=62
-                next:
-                  type: string
-                  example: http://api.discogs.com/users/abuntine/collection/folders/0/releases?per_page=5&page=2
-            pages:
-              type: integer
-              format: int32
-              example: 62
+          $ref: "#/components/schemas/Pagination"
         releases:
           type: array
           items:
@@ -4033,27 +3929,7 @@ components:
       type: object
       properties:
         pagination:
-          type: object
-          properties:
-            per_page:
-              type: integer
-              format: int32
-              example: 50
-            pages:
-              type: integer
-              format: int32
-              example: 1
-            page:
-              type: integer
-              format: int32
-              example: 1
-            items:
-              type: integer
-              format: int32
-              example: 1
-            urls:
-              type: object
-              properties: {}
+          $ref: "#/components/schemas/Pagination"
         listings:
           type: array
           items:
@@ -4331,33 +4207,7 @@ components:
                 type: boolean
                 example: false
         pagination:
-          type: object
-          properties:
-            per_page:
-              type: integer
-              format: int32
-              example: 5
-            items:
-              type: integer
-              format: int32
-              example: 77
-            page:
-              type: integer
-              format: int32
-              example: 1
-            urls:
-              type: object
-              properties:
-                last:
-                  type: string
-                  example: http://api.discogs.com/users/abuntine/wants?per_page=5&page=16
-                next:
-                  type: string
-                  example: http://api.discogs.com/users/abuntine/wants?per_page=5&page=2
-            pages:
-              type: integer
-              format: int32
-              example: 16
+          $ref: "#/components/schemas/Pagination"
     WantlistRelease:
       type: object
       properties:
@@ -4462,6 +4312,87 @@ components:
                     type: integer
                     format: int32
                     example: 1
+    UserRating: 
+      type: object
+      properties: 
+        username: 
+          type: string
+        release_id: 
+          type: number
+        rating: 
+          type: number
+    CommunityRating: 
+      type: object
+      properties: 
+        rating: 
+          type: object
+          properties: 
+            count: 
+              type: number
+            average: 
+              type: number
+        release_id: 
+          type: number
+    ReleaseStats: 
+      type: object
+      properties: 
+        num_have: 
+          type: number
+        num_want: 
+          type: number
+    Fee: 
+      type: object
+      properties: 
+        value: 
+          type: number
+        currency: 
+          type: string
+    UserCollectionValue: 
+      type: object
+      properties: 
+        maximum: 
+          type: string
+        median: 
+          type: string
+        minimum: 
+          type: string
+    Pagination: 
+      type: object
+      properties: 
+        page: 
+          type: number
+        pages: 
+          type: number
+        items: 
+          type: number
+        per_page: 
+          type: number
+        urls: 
+          type: object
+          properties: 
+            first: 
+              type: string
+            prev: 
+              type: string
+            next: 
+              type: string
+            last: 
+              type: string
+  parameters:
+    pageParam:
+      in: query
+      name: page
+      required: false
+      schema:
+        type: integer
+    perPageParam:
+      in: query
+      name: per_page
+      required: false
+      schema:
+        type: integer
+        maximum: 100
+
   securitySchemes:
     DiscogsAuth:
       type: apiKey

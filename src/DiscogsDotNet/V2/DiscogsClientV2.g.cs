@@ -332,7 +332,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetReleaseRatingByUserAsync(string release_id, string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<UserRating> GetReleaseRatingByUserAsync(string release_id, string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (release_id == null)
                 throw new System.ArgumentNullException("release_id");
@@ -382,7 +382,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<UserRating>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -422,7 +422,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> UpdateReleaseRatingByUserAsync(string release_id, string username, string body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<UserRating> UpdateReleaseRatingByUserAsync(string release_id, string username, string body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (release_id == null)
                 throw new System.ArgumentNullException("release_id");
@@ -476,7 +476,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<UserRating>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -514,7 +514,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> DeleteReleaseRatingByUserAsync(string release_id, string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task DeleteReleaseRatingByUserAsync(string release_id, string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (release_id == null)
                 throw new System.ArgumentNullException("release_id");
@@ -529,7 +529,6 @@ namespace DiscogsDotNet.V2
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -564,12 +563,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
+                            return;
                         }
                         else
                         {
@@ -602,7 +596,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetCommunityReleaseRatingAsync(string release_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<CommunityRating> GetCommunityReleaseRatingAsync(string release_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (release_id == null)
                 throw new System.ArgumentNullException("release_id");
@@ -648,7 +642,91 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CommunityRating>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new DiscogsClientV2Exception("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get Release Stats
+        /// </summary>
+        /// <remarks>
+        /// The Release Stats endpoint retrieves the total number of “haves” (in the community’s collections) and “wants” (in the community’s wantlists) for a given release.
+        /// <br/>
+        /// <br/>[https://www.discogs.com/developers/#page:database,header:database-release-stats](https://www.discogs.com/developers/#page:database,header:database-release-stats)
+        /// </remarks>
+        /// <returns>Successful response</returns>
+        /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<ReleaseStats> GetReleaseStatsAsync(string release_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (release_id == null)
+                throw new System.ArgumentNullException("release_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "releases/{release_id}/stats"
+                    urlBuilder_.Append("releases/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(release_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/stats");
+
+                    await PrepareRequestAsync(client_, request_, urlBuilder_, cancellationToken).ConfigureAwait(false);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    await PrepareRequestAsync(client_, request_, url_, cancellationToken).ConfigureAwait(false);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        await ProcessResponseAsync(client_, response_, cancellationToken).ConfigureAwait(false);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ReleaseStats>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -686,7 +764,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetMasterReleaseAsync(string master_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<MasterRelease> GetMasterReleaseAsync(string master_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (master_id == null)
                 throw new System.ArgumentNullException("master_id");
@@ -731,7 +809,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<MasterRelease>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -769,7 +847,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetMasterReleaseVersionsAsync(string master_id, string page = null, string per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<MasterReleaseVersions> GetMasterReleaseVersionsAsync(string master_id, string page = null, string per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (master_id == null)
                 throw new System.ArgumentNullException("master_id");
@@ -825,7 +903,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<MasterReleaseVersions>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -863,7 +941,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetArtistAsync(string artist_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Artist> GetArtistAsync(string artist_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (artist_id == null)
                 throw new System.ArgumentNullException("artist_id");
@@ -908,7 +986,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Artist>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -946,7 +1024,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetArtistReleasesAsync(string artist_id, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<ArtistReleases> GetArtistReleasesAsync(string artist_id, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (artist_id == null)
                 throw new System.ArgumentNullException("artist_id");
@@ -1002,7 +1080,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ArtistReleases>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1040,7 +1118,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetLabelAsync(string label_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Label> GetLabelAsync(string label_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (label_id == null)
                 throw new System.ArgumentNullException("label_id");
@@ -1085,7 +1163,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Label>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1123,7 +1201,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetAllLabelReleasesAsync(string label_id, string page = null, string per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<LabelReleases> GetAllLabelReleasesAsync(string label_id, string page = null, string per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (label_id == null)
                 throw new System.ArgumentNullException("label_id");
@@ -1179,7 +1257,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<LabelReleases>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1217,7 +1295,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetSearchAsync(string query = null, string type = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<SearchResults> GetSearchAsync(string query = null, string type = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1268,7 +1346,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<SearchResults>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1311,7 +1389,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetInventoryAsync(string username, string @string = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<UserInventory> GetInventoryAsync(string username, string @string = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -1371,7 +1449,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<UserInventory>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1410,7 +1488,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetListingAsync(string listing_id, string curr_abbr = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Listing> GetListingAsync(string listing_id, string curr_abbr = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (listing_id == null)
                 throw new System.ArgumentNullException("listing_id");
@@ -1461,7 +1539,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Listing>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1490,7 +1568,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Create Listing
+        /// Edit Listing
         /// </summary>
         /// <remarks>
         /// Edit the data associated with a listing.
@@ -1531,7 +1609,7 @@ namespace DiscogsDotNet.V2
         /// <param name="format_quantity">The number of items this listing counts as, for the purpose of calculating shipping. This field is called “Counts As” on the Discogs website. Set this field to auto to have the quantity automatically estimated for you.</param>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> CreateListingAsync(string listing_id, object body = null, string release_id = null, string condition = null, string sleeve_condition = null, string price = null, string comments = null, string allow_offers = null, string status = null, string external_id = null, string location = null, string weight = null, string format_quantity = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task EditListingAsync(string listing_id, object body = null, string release_id = null, string condition = null, string sleeve_condition = null, string price = null, string comments = null, string allow_offers = null, string status = null, string external_id = null, string location = null, string weight = null, string format_quantity = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (listing_id == null)
                 throw new System.ArgumentNullException("listing_id");
@@ -1547,7 +1625,6 @@ namespace DiscogsDotNet.V2
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -1624,14 +1701,9 @@ namespace DiscogsDotNet.V2
                         await ProcessResponseAsync(client_, response_, cancellationToken).ConfigureAwait(false);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
+                            return;
                         }
                         else
                         {
@@ -1664,7 +1736,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> DeleteListingAsync(string listing_id, string curr_abbr = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task DeleteListingAsync(string listing_id, string curr_abbr = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (listing_id == null)
                 throw new System.ArgumentNullException("listing_id");
@@ -1676,7 +1748,6 @@ namespace DiscogsDotNet.V2
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -1713,14 +1784,9 @@ namespace DiscogsDotNet.V2
                         await ProcessResponseAsync(client_, response_, cancellationToken).ConfigureAwait(false);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 204)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
+                            return;
                         }
                         else
                         {
@@ -1781,7 +1847,7 @@ namespace DiscogsDotNet.V2
         /// <param name="format_quantity">The number of items this listing counts as, for the purpose of calculating shipping. This field is called “Counts As” on the Discogs website. Set this field to auto to have the quantity automatically estimated for you.</param>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> CreateNewListingAsync(object body = null, string release_id = null, string condition = null, string sleeve_condition = null, string price = null, string comments = null, string allow_offers = null, string status = null, string external_id = null, string location = null, string weight = null, string format_quantity = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Response> CreateNewListingAsync(object body = null, string release_id = null, string condition = null, string sleeve_condition = null, string price = null, string comments = null, string allow_offers = null, string status = null, string external_id = null, string location = null, string weight = null, string format_quantity = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1872,7 +1938,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1911,7 +1977,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetOrderAsync(string order_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Order> GetOrderAsync(string order_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (order_id == null)
                 throw new System.ArgumentNullException("order_id");
@@ -1956,7 +2022,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Order>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1985,10 +2051,10 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Create Order
+        /// Edit Order
         /// </summary>
         /// <remarks>
-        /// dit the data associated with an order.
+        /// Edit the data associated with an order.
         /// <br/>Authentication as the seller is required.
         /// <br/>The response contains a next_status key – an array of valid next statuses for this order, which you can display to the user in (for example) a dropdown control. This also renders your application more resilient to any future changes in the order status logic.
         /// <br/>Changing the order status using this resource will always message the buyer with:
@@ -2017,7 +2083,7 @@ namespace DiscogsDotNet.V2
         /// <param name="shipping">The order shipping amount. As a side-effect of setting this value, the buyer is invoiced and the order status is set to Invoice Sent.</param>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> CreateOrderAsync(string order_id, object body = null, string status = null, string shipping = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Order> EditOrderAsync(string order_id, object body = null, string status = null, string shipping = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (order_id == null)
                 throw new System.ArgumentNullException("order_id");
@@ -2076,7 +2142,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Order>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -2136,7 +2202,7 @@ namespace DiscogsDotNet.V2
         /// <param name="sort_order">Sort items in a particular order (one of asc, desc)</param>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetListOrdersAsync(string status = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Orders> GetListOrdersAsync(string status = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2191,7 +2257,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Orders>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -2220,7 +2286,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Get List order messages
+        /// List order messages
         /// </summary>
         /// <remarks>
         /// Returns a list of the order's messages with the most recent first. Accepts Pagination parameters.
@@ -2230,7 +2296,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetListOrderMessagesAsync(string order_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<OrderMessages> ListOrderMessagesAsync(string order_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (order_id == null)
                 throw new System.ArgumentNullException("order_id");
@@ -2276,7 +2342,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<OrderMessages>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -2305,7 +2371,7 @@ namespace DiscogsDotNet.V2
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Create List order messages
+        /// Create new order message
         /// </summary>
         /// <remarks>
         /// Adds a new message to the order's message log.
@@ -2318,7 +2384,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> CreateListOrderMessagesAsync(string order_id, object body = null, string message = null, string status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Response2> CreateNewOrderMessagesAsync(string order_id, object body = null, string message = null, string status = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (order_id == null)
                 throw new System.ArgumentNullException("order_id");
@@ -2378,7 +2444,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Response2>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -2417,7 +2483,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetFeeAsync(string price, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Fee> GetFeeAsync(string price, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (price == null)
                 throw new System.ArgumentNullException("price");
@@ -2462,7 +2528,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Fee>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -2500,7 +2566,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetFeeWithCurrencyAsync(string price, string currency, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<Fee> GetFeeWithCurrencyAsync(string price, string currency, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (price == null)
                 throw new System.ArgumentNullException("price");
@@ -2550,7 +2616,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Fee>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -2589,7 +2655,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetPriceSuggestionsAsync(string release_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<PriceSuggestions> GetPriceSuggestionsAsync(string release_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (release_id == null)
                 throw new System.ArgumentNullException("release_id");
@@ -2634,7 +2700,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PriceSuggestions>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -3414,7 +3480,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetProfileAsync(string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<User> GetProfileAsync(string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -3459,7 +3525,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<User>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -4302,7 +4368,7 @@ namespace DiscogsDotNet.V2
         /// <param name="sort_order">Sort items in a particular order (asc or desc)</param>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetCollectionItemsByFolderAsync(string username, string folder_id, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<UserCollection> GetCollectionItemsByFolderAsync(string username, string folder_id, int? page = null, int? per_page = null, string sort = null, string sort_order = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -4328,6 +4394,14 @@ namespace DiscogsDotNet.V2
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(folder_id, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append("/releases");
                     urlBuilder_.Append('?');
+                    if (page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (per_page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("per_page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(per_page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
                     if (sort != null)
                     {
                         urlBuilder_.Append(System.Uri.EscapeDataString("sort")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(sort, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
@@ -4363,7 +4437,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<UserCollection>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -4825,7 +4899,7 @@ namespace DiscogsDotNet.V2
         /// </remarks>
         /// <returns>Successful response</returns>
         /// <exception cref="DiscogsClientV2Exception">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> CollectionValueAsync(string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<UserCollectionValue> CollectionValueAsync(string username, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (username == null)
                 throw new System.ArgumentNullException("username");
@@ -4871,7 +4945,7 @@ namespace DiscogsDotNet.V2
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<UserCollectionValue>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DiscogsClientV2Exception("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
