@@ -1,4 +1,5 @@
 ﻿namespace DiscogsDotNet.V2;
+
 using System.Net.Http.Headers;
 
 public class DiscogsPersonalAccessTokenAuthenticationHandler : DelegatingHandler
