@@ -1,10 +1,20 @@
 ﻿namespace DiscogsDotNet.V2;
 
+using System.ComponentModel.DataAnnotations;
+
 public class DiscogsClientV2Options
 {
     public string BasePath { get; set; } = "https://api.discogs.com";
-    public string? PersonalAccessToken { get; set; }
+
+    [Required]
+    public string PersonalAccessToken { get; set; }
+
+    [Required]
     public string UserAgent { get; set; }
-    public string UserAgentVersion { get; set; } = "1.0";
+
+    [Required]
+    public string UserAgentVersion { get; set; }
+
+    [Required]
     public string? UserAgentUri { get; set; }
 }

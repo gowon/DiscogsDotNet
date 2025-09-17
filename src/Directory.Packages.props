@@ -3,66 +3,10 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="AspNetCore.HealthChecks.ApplicationStatus" Version="8.0.1" />
-    <PackageVersion Include="AspNetCore.HealthChecks.UI.Client" Version="8.0.1" />
-    <PackageVersion Include="Carter" Version="8.2.1" />
-    <PackageVersion Include="CliWrap" Version="3.6.6" />
-    <PackageVersion Include="CrystalQuartz.AspNetCore" Version="7.1.0" />
-    <PackageVersion Include="Extensions.Hosting.AsyncInitialization" Version="3.0.1" />
-    <PackageVersion Include="FluentValidation" Version="11.10.0" />
-    <PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.0" />
-    <PackageVersion Include="GitVersion.MsBuild" Version="5.12.0" />
-    <PackageVersion Include="HealthChecks.OpenTelemetry.Instrumentation" Version="1.1.0-dev.8" />
-    <PackageVersion Include="MassTransit" Version="8.3.0" />
-    <PackageVersion Include="MassTransit.Abstractions" Version="8.3.0" />
-    <PackageVersion Include="MassTransit.AspNetCore" Version="7.3.1" />
-    <PackageVersion Include="MassTransit.RabbitMQ" Version="8.3.0" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="8.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="8.0.10" />
-    <PackageVersion Include="Microsoft.FeatureManagement" Version="3.5.0" />
-    <PackageVersion Include="Microsoft.FeatureManagement.AspNetCore" Version="3.5.0" />
-    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-    <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageVersion Include="NLog" Version="5.3.4" />
-    <PackageVersion Include="NLog.Extensions.Logging" Version="5.3.14" />
-    <PackageVersion Include="NLog.Layouts.ClefJsonLayout" Version="1.0.0" />
-    <PackageVersion Include="NLog.Web.AspNetCore" Version="5.3.14" />
-    <PackageVersion Include="OpenTelemetry" Version="1.9.0" />
-    <PackageVersion Include="OpenTelemetry.Api.ProviderBuilderExtensions" Version="1.9.0" />
-    <PackageVersion Include="OpenTelemetry.Contrib.Instrumentation.AWS" Version="1.0.2" />
-    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.9.0" />
-    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.9.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.9.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" Version="1.0.0-beta.12" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Quartz" Version="1.0.0-beta.3" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.9.0" />
-    <PackageVersion Include="Polly" Version="8.3.1" />
-    <PackageVersion Include="Quartz.AspNetCore" Version="3.13.0" />
-    <PackageVersion Include="Quartz.Serialization.Json" Version="3.13.0" />
-    <PackageVersion Include="Quartz.Serialization.SystemTextJson" Version="3.13.0" />
-    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.9.0" />
-    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.9.0" />
-    <PackageVersion Include="SqlKata" Version="2.4.0" />
-    <PackageVersion Include="SqlKata.Execution" Version="2.4.0" />
-    <PackageVersion Include="MediatR" Version="12.4.1" />
-    <PackageVersion Include="AutoMapper" Version="13.0.1" />
-    <PackageVersion Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.300" />
-    <PackageVersion Include="AWSSDK.S3" Version="3.7.307.20" />
-    <PackageVersion Include="Extensions.Options.AutoBinder" Version="1.2.0-dev.9" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.4" />
-    <PackageVersion Include="MediatR.Contracts" Version="2.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions" Version="8.0.10" />
-    <PackageVersion Include="Quartz" Version="3.13.0" />
-    <PackageVersion Include="Quartz.Extensions.Hosting" Version="3.13.0" />
-    <PackageVersion Include="AppAny.Quartz.EntityFrameworkCore.Migrations.PostgreSQL" Version="0.5.1" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10" />
-    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.32" />
+    <PackageVersion Include="Newtonsoft.Json" Version="[13.0.1,14.0)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.32" />
     <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
-    <PackageVersion Include="TestableIO.System.IO.Abstractions.Analyzers" Version="2022.0.0" />
-    <PackageVersion Include="TestableIO.System.IO.Abstractions.Wrappers" Version="21.0.2" />
   </ItemGroup>
   <!-- Global Package References should only be used for build tools and analyzers that apply to all projects in the directory. -->
   <!-- ref: https://learn.microsoft.com/en-us/nuget/consume-packages/central-package-management#global-package-references -->

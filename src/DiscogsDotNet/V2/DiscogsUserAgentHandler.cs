@@ -14,7 +14,7 @@ public class DiscogsUserAgentHandler : DelegatingHandler
         CancellationToken cancellationToken)
     {
         request.Headers.TryAddWithoutValidation("User-Agent",
-            $"{_options.UserAgent}-{nameof(DiscogsDotNet)}/1.0 +https://github.com/gowon/DiscogsDotNet");
+            $"{_options.UserAgent}/{_options.UserAgentVersion} +{_options.UserAgentUri}");
         return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
     }
 }

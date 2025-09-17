@@ -1,9 +1,8 @@
 namespace SampleClientService;
 
+using System.IO.Abstractions;
 using DiscogsDotNet.V2;
 using NPOI.XSSF.UserModel;
-using Polly.RateLimiting;
-using System.IO.Abstractions;
 
 public class Worker : BackgroundService
 {
@@ -47,31 +46,34 @@ public class Worker : BackgroundService
             _options.DiscogsUser);
 
         var records = new List<Record>();
-
-        try
+        foreach (var release in releases)
         {
-            foreach (var release in releases)
+            var record = new Record
             {
-                var record = new Record
-                {
-                    Artist = release.Basic_information.Artists.First().Name,
-                    Title = release.Basic_information.Title,
-                    Year = release.Basic_information.Year,
-                    Format = release.Basic_information.Formats.First().Name
-                };
+                Artist = release.Basic_information.Artists.First().Name,
+                Title = release.Basic_information.Title,
+                Year = release.Basic_information.Year,
+                Format = release.Basic_information.Formats.First().Name
+            };
 
-                var priceSuggestions = await _client.GetPriceSuggestionsAsync(release.Id.ToString(), stoppingToken);
+            var priceSuggestions = await _client.GetPriceSuggestionsAsync(release.Id.ToString(), stoppingToken);
 
+            if (priceSuggestions.Fair__F != null)
+            {
                 record.FairMarketValue = Math.Round(priceSuggestions.Fair__F.Value, 2);
-                record.VeryGoodMarketValue = Math.Round(priceSuggestions.Very_Good__VG.Value, 2);
-                record.MintMarketValue = Math.Round(priceSuggestions.Mint__M.Value, 2);
-
-                records.Add(record);
             }
-        }
-        catch (RateLimiterRejectedException ex)
-        {
-            Console.WriteLine($"Operation ultimately failed due to rate limiting: {ex.Message}");
+
+            if (priceSuggestions.Very_Good__VG != null)
+            {
+                record.VeryGoodMarketValue = Math.Round(priceSuggestions.Very_Good__VG.Value, 2);
+            }
+
+            if (priceSuggestions.Mint__M != null)
+            {
+                record.MintMarketValue = Math.Round(priceSuggestions.Mint__M.Value, 2);
+            }
+
+            records.Add(record);
         }
 
         var path = _fileSystem.Path.Join(_fileSystem.Directory.GetCurrentDirectory(),
@@ -79,7 +81,7 @@ public class Worker : BackgroundService
         _logger.LogInformation("Creating new spreadsheet `{FilePath}`", path);
         CreateExcelWithHeaders(records, path);
         _logger.LogInformation("File created.");
-       
+
         _applicationLifetime.StopApplication();
     }
 
@@ -88,13 +90,18 @@ public class Worker : BackgroundService
         // Create a new Excel workbook (XSSFWorkbook for .xlsx, HSSFWorkbook for .xls)
         var workbook = new XSSFWorkbook();
 
+        // Create a cell style
+        // ref: https://stackoverflow.com/a/45566070/7644876
+        var currencyCellStyle = workbook.CreateCellStyle();
+        currencyCellStyle.DataFormat = workbook.CreateDataFormat().GetFormat("$#,##0.00");
+
         // Create a new sheet
-        var sheet = workbook.CreateSheet();
+        var sheet = workbook.CreateSheet($"Discogs Collection - {_options.DiscogsUser}");
 
-        // Create the header row
+        // Create and freeze the header row
         var headerRow = sheet.CreateRow(0);
+        sheet.CreateFreezePane(0, 1, 0, 1);
 
-        // Define your header names
         string[] headers =
         [
             nameof(Record.Artist), nameof(Record.Title), nameof(Record.Year), nameof(Record.Format),
@@ -118,7 +125,9 @@ public class Worker : BackgroundService
 
             if (record.FairMarketValue.HasValue)
             {
-                row.CreateCell(4).SetCellValue(record.FairMarketValue.Value);
+                var cell = row.CreateCell(4);
+                cell.SetCellValue(record.FairMarketValue.Value);
+                cell.CellStyle = currencyCellStyle;
             }
             else
             {
@@ -127,7 +136,9 @@ public class Worker : BackgroundService
 
             if (record.VeryGoodMarketValue.HasValue)
             {
-                row.CreateCell(5).SetCellValue(record.VeryGoodMarketValue.Value);
+                var cell = row.CreateCell(5);
+                cell.SetCellValue(record.VeryGoodMarketValue.Value);
+                cell.CellStyle = currencyCellStyle;
             }
             else
             {
@@ -136,7 +147,9 @@ public class Worker : BackgroundService
 
             if (record.MintMarketValue.HasValue)
             {
-                row.CreateCell(6).SetCellValue(record.MintMarketValue.Value);
+                var cell = row.CreateCell(6);
+                cell.SetCellValue(record.MintMarketValue.Value);
+                cell.CellStyle = currencyCellStyle;
             }
             else
             {
